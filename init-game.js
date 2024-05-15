@@ -1,19 +1,8 @@
 keyboard = new KEYBOARD();
 
-/**
- * Initializes the game by creating a world instance.
- * @function initGame
- *
- * The canvas element where the game will be rendered.
- * @type {HTMLCanvasElement}
- *
- * The world instance where the game objects exist.
- * @type {World}
- *
- */
 function initGame() {
   let canvas = document.getElementById("canvas");
-  world = new World(canvas);
+  world = new World(canvas, keyboard);
 }
 
 window.addEventListener("keydown", (e) => {

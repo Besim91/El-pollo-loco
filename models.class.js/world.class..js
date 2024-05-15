@@ -19,21 +19,23 @@ class World {
     new SmallChicken(),
   ];
   clouds = [new CloudsOne(), new CloudsOne(), new CloudsTwo(), new CloudsTwo()];
-  canvas;
+  canvas; //Declare for clearRect
+  keyboard;
 
   setWorld() {
-    this.character.world = this;
+    this.character.world = this; //Needed for accsses from charcter to keyboard
   }
 
-  constructor(canvas) {
+  constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
-    this.canvas = canvas; //Declare canvas as global variable to use it for clearRect.
     this.keyboard = keyboard;
+    this.canvas = canvas; //Declare canvas as global variable to use it for clearRect.
     this.draw();
+    this.setWorld();
   }
 
   draw() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //To use canvas here, it have to be declared as a variable before
 
     this.drawObjectOnMap(this.background);
     this.drawElementOnMap(this.character);

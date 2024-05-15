@@ -15,6 +15,14 @@ class Character extends MoveableObject {
     super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");
     this.y = 220;
     this.loadImages(this.WALKING_PEPE);
+    this.playAnimation();
   }
-  moveRight() {}
+
+  playAnimation() {
+    setInterval(() => {
+      if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+        this.animate(this.WALKING_PEPE);
+      }
+    }, 100);
+  }
 }
