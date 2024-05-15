@@ -5,7 +5,7 @@ class CloudsTwo extends MoveableObject {
 
   constructor() {
     super().loadImage("img/5_background/layers/4_clouds/2.png");
-    this.x = Math.random() * 500;
+    this.x = Math.random() * 799 * 5;
     this.y = 50;
     this.moveLeft(this.speed);
   }

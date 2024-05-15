@@ -1,29 +1,13 @@
 class World {
   ctx;
-  background = [
-    new Background("img/5_background/layers/air.png", 0),
-    new Background("img/5_background/layers/3_third_layer/1.png", 0),
-    new Background("img/5_background/layers/2_second_layer/1.png", 0),
-    new Background("img/5_background/layers/1_first_layer/1.png", 0),
-  ];
-
   character = new Character();
-  enemies = [
-    new Chicken(),
-    new Chicken(),
-    new Chicken(),
-    new Chicken(),
-    new SmallChicken(),
-    new SmallChicken(),
-    new SmallChicken(),
-    new SmallChicken(),
-  ];
-  clouds = [new CloudsOne(), new CloudsOne(), new CloudsTwo(), new CloudsTwo()];
+  level = level1;
   canvas; //Declare for clearRect
   keyboard;
+  cameraX = 0;
 
   setWorld() {
-    this.character.world = this; //Needed for accsses from charcter to keyboard
+    this.character.world = this; //Needed for accsses from charcter to keyboard. World is defined in the class charachter
   }
 
   constructor(canvas, keyboard) {
@@ -37,10 +21,12 @@ class World {
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //To use canvas here, it have to be declared as a variable before
 
-    this.drawObjectOnMap(this.background);
+    this.ctx.translate(this.cameraX, 0); //Moves the camera
+    this.drawObjectOnMap(this.level.background);
     this.drawElementOnMap(this.character);
-    this.drawObjectOnMap(this.enemies);
-    this.drawObjectOnMap(this.clouds);
+    this.drawObjectOnMap(this.level.enemies);
+    this.drawObjectOnMap(this.level.clouds);
+    this.ctx.translate(-this.cameraX, 0); //Moves the camera back
 
     //Call the draw function so often as the grafic card is possible to do it
     let self = this;
@@ -56,13 +42,21 @@ class World {
     });
   }
   //The element from the selected object is going to be created. The parameters are in the classes
-  drawElementOnMap(element) {
-    this.ctx.drawImage(
-      element.img,
-      element.x,
-      element.y,
-      element.width,
-      element.height
-    );
+  drawElementOnMap(mo) {
+    if (mo.otherDirection == true) {
+      //Function is drawing the object mirrored
+      this.ctx.save();
+      this.ctx.translate(mo.width, 0);
+      this.ctx.scale(-1, 1);
+      mo.x = mo.x * -1; //Mirror the axe
+    }
+
+    this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+
+    if (mo.otherDirection == true) {
+      //Function is drawing the object mirrored
+      mo.x = mo.x * -1; //Sets the axe back to the origin form
+      this.ctx.restore(); //Sets the saved status back
+    }
   }
 }

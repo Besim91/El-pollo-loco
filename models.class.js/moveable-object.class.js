@@ -25,6 +25,12 @@ class MoveableObject {
     }, 1000 / 120);
   }
 
+  moveRight() {
+    setInterval(() => {
+      this.x += this.speed;
+    }, 1000 / 120);
+  }
+
   animate(arr) {
     let i = this.currentImage % arr.length;
     let path = arr[i];
