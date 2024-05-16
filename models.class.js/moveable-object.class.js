@@ -20,15 +20,11 @@ class MoveableObject {
   }
 
   moveLeft() {
-    setInterval(() => {
-      this.x -= this.speed;
-    }, 1000 / 120);
+    this.x -= this.speed;
   }
 
   moveRight() {
-    setInterval(() => {
-      this.x += this.speed;
-    }, 1000 / 120);
+    this.x += this.speed;
   }
 
   animate(arr) {
@@ -36,5 +32,9 @@ class MoveableObject {
     let path = arr[i];
     this.img = this.imageChache[path];
     this.currentImage++;
+  }
+
+  jump() {
+    this.speedY = 40;
   }
 }

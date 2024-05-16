@@ -41,6 +41,7 @@ class World {
       this.drawElementOnMap(e);
     });
   }
+
   //The element from the selected object is going to be created. The parameters are in the classes
   drawElementOnMap(mo) {
     if (mo.otherDirection == true) {
