@@ -99,8 +99,14 @@ class Character extends MoveableObject {
       this.img = this.imageChache[path];
     }
 
-    if (this.speedY < 0) {
-      for (let i = 5; i < 8; i++) {
+    if (this.speedY < 0 && this.speedY >= -40) {
+      for (let i = 5; i < 6; i++) {
+        let path = arr[i];
+        this.img = this.imageChache[path];
+      }
+    }
+    if (this.speedY == -40) {
+      for (let i = 6; i < 9; i++) {
         let path = arr[i];
         this.img = this.imageChache[path];
       }
