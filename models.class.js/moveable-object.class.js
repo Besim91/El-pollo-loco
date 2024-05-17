@@ -22,13 +22,6 @@ class MoveableObject extends DrawableObject {
     this.x += this.speed;
   }
 
-  animate(arr) {
-    let i = this.currentImage % arr.length;
-    let path = arr[i];
-    this.img = this.imageChache[path];
-    this.currentImage++;
-  }
-
   jump() {
     this.speedY = 40;
   }

@@ -37,4 +37,11 @@ class DrawableObject {
       ctx.stroke();
     }
   }
+
+  animate(arr) {
+    let i = this.currentImage % arr.length;
+    let path = arr[i];
+    this.img = this.imageChache[path];
+    this.currentImage++;
+  }
 }
