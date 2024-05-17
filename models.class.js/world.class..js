@@ -42,6 +42,8 @@ class World {
     this.drawObjectOnMap(this.level.enemies);
     this.drawObjectOnMap(this.level.clouds);
     this.drawObjectOnMap(this.level.coins);
+    this.drawObjectOnMap(this.level.salsaBottleLeft);
+    this.drawObjectOnMap(this.level.salsaBottleRight);
 
     this.ctx.translate(-this.cameraX, 0); //Moves the camera back
     this.drawElementOnMap(this.statusbar);
