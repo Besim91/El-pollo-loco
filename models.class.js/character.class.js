@@ -45,8 +45,6 @@ class Character extends MoveableObject {
   jumpSound = new Audio("audio/jump.mp3");
   hurtSound = new Audio("audio/hurt.mp3");
   deathSound = new Audio("audio/deathPepe.mp3");
-  speedY = 0;
-  acceleration = 4;
 
   constructor() {
     super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");

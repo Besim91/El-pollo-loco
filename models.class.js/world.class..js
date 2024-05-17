@@ -5,6 +5,7 @@ class World {
   canvas; //Declare for clearRect
   keyboard;
   cameraX = 0;
+  statusbar = new Statusbar();
 
   setWorld() {
     this.character.world = this; //Needed for accsses from charcter to keyboard. World is defined in the class charachter
@@ -24,7 +25,7 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
           this.character.hit();
-          console.log("Leben", this.character.energy);
+          this.statusbar.setPercentage(this.character.energy);
         }
       });
     }, 100);
@@ -38,6 +39,11 @@ class World {
     this.drawElementOnMap(this.character);
     this.drawObjectOnMap(this.level.enemies);
     this.drawObjectOnMap(this.level.clouds);
+
+    this.ctx.translate(-this.cameraX, 0); //Moves the camera back
+    this.drawElementOnMap(this.statusbar);
+    this.ctx.translate(this.cameraX, 0); //Moves the camera
+
     this.ctx.translate(-this.cameraX, 0); //Moves the camera back
 
     //Call the draw function so often as the grafic card is possible to do it
