@@ -22,5 +22,9 @@ class SmallChicken extends MoveableObject {
     setInterval(() => {
       this.animate(this.WALKING_SMALLCHICKEN);
     }, 100);
+
+    setInterval(() => {
+      this.moveLeft();
+    }, 1000 / 120);
   }
 }

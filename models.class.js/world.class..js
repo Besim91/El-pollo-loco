@@ -16,6 +16,18 @@ class World {
     this.canvas = canvas; //Declare canvas as global variable to use it for clearRect.
     this.draw();
     this.setWorld();
+    this.checkCollisions();
+  }
+
+  checkCollisions() {
+    setInterval(() => {
+      this.level.enemies.forEach((enemy) => {
+        if (this.character.isColliding(enemy)) {
+          this.character.hit();
+          console.log("Leben", this.character.energy);
+        }
+      });
+    }, 100);
   }
 
   draw() {
@@ -44,6 +56,13 @@ class World {
 
   //The element from the selected object is going to be created. The parameters are in the classes
   drawElementOnMap(mo) {
+    this.flipImage(mo);
+    mo.draw(this.ctx);
+    mo.drawFrame(this.ctx);
+    this.flipImageBack(mo);
+  }
+
+  flipImage(mo) {
     if (mo.otherDirection == true) {
       //Function is drawing the object mirrored
       this.ctx.save();
@@ -51,9 +70,9 @@ class World {
       this.ctx.scale(-1, 1);
       mo.x = mo.x * -1; //Mirror the axe
     }
+  }
 
-    this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-
+  flipImageBack(mo) {
     if (mo.otherDirection == true) {
       //Function is drawing the object mirrored
       mo.x = mo.x * -1; //Sets the axe back to the origin form
