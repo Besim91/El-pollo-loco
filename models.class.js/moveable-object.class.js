@@ -33,8 +33,6 @@ class MoveableObject extends DrawableObject {
     this.speedY = 40;
   }
 
-
-
   hit() {
     this.energy -= 2;
     if (this.energy < 0) {

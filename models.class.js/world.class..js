@@ -6,6 +6,8 @@ class World {
   keyboard;
   cameraX = 0;
   statusbar = new Statusbar();
+  statusbarBottle = new StatusbarBottle();
+  statusbarCoin = new StatusbarCoin();
 
   setWorld() {
     this.character.world = this; //Needed for accsses from charcter to keyboard. World is defined in the class charachter
@@ -42,6 +44,8 @@ class World {
 
     this.ctx.translate(-this.cameraX, 0); //Moves the camera back
     this.drawElementOnMap(this.statusbar);
+    this.drawElementOnMap(this.statusbarBottle);
+    this.drawElementOnMap(this.statusbarCoin);
     this.ctx.translate(this.cameraX, 0); //Moves the camera
 
     this.ctx.translate(-this.cameraX, 0); //Moves the camera back
