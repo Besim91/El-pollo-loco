@@ -17,24 +17,24 @@ class StatusbarBottle extends DrawableObject {
     this.height = 60;
   }
 
-  setPercentage(percentage) {
-    this.percentage = percentage;
+  setPercentage(collectedBottles) {
+    this.collectedBottles = collectedBottles;
     let path = this.STATUSBAR_BOTTLE[this.resolvePercentageIndex()];
     this.img = this.imageChache[path];
   }
 
   resolvePercentageIndex() {
-    if (this.percentage == 100) {
+    if (this.collectedBottles == 100) {
       return 5;
-    } else if (this.percentage >= 80) {
+    } else if (this.collectedBottles >= 80) {
       return 4;
-    } else if (this.percentage >= 60) {
+    } else if (this.collectedBottles >= 60) {
       return 3;
-    } else if (this.percentage >= 40) {
+    } else if (this.collectedBottles >= 40) {
       return 2;
-    } else if (this.percentage >= 20) {
+    } else if (this.collectedBottles >= 20) {
       return 1;
-    } else if (this.percentage >= 0) {
+    } else {
       return 0;
     }
   }

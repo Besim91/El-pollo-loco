@@ -8,6 +8,8 @@ class World {
   statusbar = new Statusbar();
   statusbarBottle = new StatusbarBottle();
   statusbarCoin = new StatusbarCoin();
+  bottleSound = new Audio("audio/bottle.mp3");
+  coinSound = new Audio("audio/coin.mp3");
 
   setWorld() {
     this.character.world = this; //Needed for accsses from charcter to keyboard. World is defined in the class charachter
@@ -28,6 +30,36 @@ class World {
         if (this.character.isColliding(enemy)) {
           this.character.hit();
           this.statusbar.setPercentage(this.character.energy);
+        }
+      });
+      this.level.salsaBottleLeft.forEach((bottle) => {
+        if (this.character.isColliding(bottle)) {
+          this.bottleSound.play();
+          this.character.takeBottle();
+          this.statusbarBottle.setPercentage(this.character.collectedBottles);
+          this.bottleSound.currentTime = 0;
+          let index = this.level.salsaBottleLeft.indexOf(bottle);
+          this.level.salsaBottleLeft.splice(index, 1);
+        }
+      });
+      this.level.salsaBottleRight.forEach((bottle) => {
+        if (this.character.isColliding(bottle)) {
+          this.bottleSound.play();
+          this.character.takeBottle();
+          this.statusbarBottle.setPercentage(this.character.collectedBottles);
+          this.bottleSound.currentTime = 0;
+          let index = this.level.salsaBottleRight.indexOf(bottle);
+          this.level.salsaBottleRight.splice(index, 1);
+        }
+      });
+      this.level.coins.forEach((coin) => {
+        if (this.character.isColliding(coin)) {
+          this.coinSound.play();
+          this.character.takeCoin();
+          this.statusbarCoin.setPercentage(this.character.collectedCoins);
+          this.coinSound.currentTime = 0;
+          let index = this.level.coins.indexOf(coin);
+          this.level.coins.splice(index, 1);
         }
       });
     }, 100);

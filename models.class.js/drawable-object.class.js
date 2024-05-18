@@ -5,6 +5,7 @@ class DrawableObject {
   imageChache = []; //Storage for images to animate the charcters
   currentImage = 0;
   percentage;
+  collectedBottles = 0;
 
   loadImage(path) {
     this.img = new Image(); // Create an image

@@ -17,24 +17,24 @@ class StatusbarCoin extends DrawableObject {
     this.height = 60;
   }
 
-  setPercentage(percentage) {
-    this.percentage = percentage;
+  setPercentage(collectedCoins) {
+    this.collectedCoins = collectedCoins;
     let path = this.STATUSBAR_COIN[this.resolvePercentageIndex()];
     this.img = this.imageChache[path];
   }
 
   resolvePercentageIndex() {
-    if (this.percentage == 100) {
+    if (this.collectedCoins == 100) {
       return 5;
-    } else if (this.percentage >= 80) {
+    } else if (this.collectedCoins >= 80) {
       return 4;
-    } else if (this.percentage >= 60) {
+    } else if (this.collectedCoins >= 60) {
       return 3;
-    } else if (this.percentage >= 40) {
+    } else if (this.collectedCoins >= 40) {
       return 2;
-    } else if (this.percentage >= 20) {
+    } else if (this.collectedCoins >= 20) {
       return 1;
-    } else if (this.percentage >= 0) {
+    } else if (this.collectedCoins >= 0) {
       return 0;
     }
   }

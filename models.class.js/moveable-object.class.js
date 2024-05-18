@@ -4,6 +4,8 @@ class MoveableObject extends DrawableObject {
   lastHit = 0;
   acceleration = 4;
   speedY = 0;
+  collectedBottles = 0;
+  collectedCoins = 0;
 
   isColliding(obj) {
     return (
@@ -43,5 +45,14 @@ class MoveableObject extends DrawableObject {
     let passedTime = new Date().getTime() - this.lastHit;
     let passedTimeSek = passedTime / 1000;
     return passedTimeSek < 0.5;
+  }
+
+  takeBottle() {
+    this.collectedBottles += 10;
+    console.log(this.collectedBottles);
+  }
+
+  takeCoin() {
+    this.collectedCoins += 10;
   }
 }

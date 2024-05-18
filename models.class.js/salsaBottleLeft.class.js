@@ -1,4 +1,4 @@
-class salsaBottleLeft extends DrawableObject {
+class salsaBottleLeft extends MoveableObject {
   width = 100;
   height = 100;
 
