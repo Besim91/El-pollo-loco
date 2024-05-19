@@ -5,6 +5,7 @@ class MoveableObject extends DrawableObject {
   acceleration = 4;
   speedY = 0;
   collectedBottles = 0;
+  throwablebottles = 0;
   collectedCoins = 0;
 
   isColliding(obj) {
@@ -49,10 +50,28 @@ class MoveableObject extends DrawableObject {
 
   takeBottle() {
     this.collectedBottles += 10;
+    this.throwablebottles += 10;
     console.log(this.collectedBottles);
   }
 
   takeCoin() {
     this.collectedCoins += 10;
+  }
+
+  graviation() {
+    setInterval(() => {
+      if (this.isInAir() || this.speedY > 0) {
+        this.y -= this.speedY;
+        this.speedY -= this.acceleration;
+      }
+    }, 60);
+  }
+
+  isInAir() {
+    if (this instanceof ThrowableObjects) {
+      return true;
+    } else {
+      return this.y < 220;
+    }
   }
 }

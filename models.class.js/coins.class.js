@@ -7,7 +7,7 @@ class Coin extends MoveableObject {
   constructor() {
     super().loadImages(this.COINS);
     this.x = 200 + Math.random() * 799 * 5;
-    this.y = 200;
+    this.y = 100;
     this.playAnimation();
   }
 

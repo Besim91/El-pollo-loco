@@ -10,68 +10,88 @@ class World {
   statusbarCoin = new StatusbarCoin();
   bottleSound = new Audio("audio/bottle.mp3");
   coinSound = new Audio("audio/coin.mp3");
+  throwableObject = [];
 
   setWorld() {
     this.character.world = this; //Needed for accsses from charcter to keyboard. World is defined in the class charachter
+    this.throwableObject.world = this;
   }
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.keyboard = keyboard;
     this.canvas = canvas; //Declare canvas as global variable to use it for clearRect.
-    this.draw();
     this.setWorld();
-    this.checkCollisions();
+    this.drawGame();
+    this.runGame();
   }
 
-  checkCollisions() {
+  throwBottle() {}
+
+  runGame() {
     setInterval(() => {
-      this.level.enemies.forEach((enemy) => {
-        if (this.character.isColliding(enemy)) {
-          this.character.hit();
-          this.statusbar.setPercentage(this.character.energy);
-        }
-      });
-      this.level.salsaBottleLeft.forEach((bottle) => {
-        if (this.character.isColliding(bottle)) {
-          this.bottleSound.play();
-          this.character.takeBottle();
-          this.statusbarBottle.setPercentage(this.character.collectedBottles);
-          this.bottleSound.currentTime = 0;
-          let index = this.level.salsaBottleLeft.indexOf(bottle);
-          this.level.salsaBottleLeft.splice(index, 1);
-        }
-      });
-      this.level.salsaBottleRight.forEach((bottle) => {
-        if (this.character.isColliding(bottle)) {
-          this.bottleSound.play();
-          this.character.takeBottle();
-          this.statusbarBottle.setPercentage(this.character.collectedBottles);
-          this.bottleSound.currentTime = 0;
-          let index = this.level.salsaBottleRight.indexOf(bottle);
-          this.level.salsaBottleRight.splice(index, 1);
-        }
-      });
-      this.level.coins.forEach((coin) => {
-        if (this.character.isColliding(coin)) {
-          this.coinSound.play();
-          this.character.takeCoin();
-          this.statusbarCoin.setPercentage(this.character.collectedCoins);
-          this.coinSound.currentTime = 0;
-          let index = this.level.coins.indexOf(coin);
-          this.level.coins.splice(index, 1);
-        }
-      });
+      this.checkCollisions();
+      this.checkThrowObjects();
     }, 100);
   }
 
-  draw() {
+  checkThrowObjects() {
+    if (this.keyboard.D == true && this.character.throwablebottles > 0) {
+      let bottle = new ThrowableObjects(this.character.x, this.character.y);
+      this.throwableObject.push(bottle);
+      if (this.character.throwablebottles > 0) {
+        this.character.throwablebottles -= 10;
+      }
+    }
+  }
+
+  checkCollisions() {
+    this.level.enemies.forEach((enemy) => {
+      if (this.character.isColliding(enemy)) {
+        this.character.hit();
+        this.statusbar.setPercentage(this.character.energy);
+      }
+    });
+    this.level.salsaBottleLeft.forEach((bottle) => {
+      if (this.character.isColliding(bottle)) {
+        this.bottleSound.play();
+        this.character.takeBottle();
+        this.statusbarBottle.setPercentage(this.character.collectedBottles);
+        this.bottleSound.currentTime = 0;
+        let index = this.level.salsaBottleLeft.indexOf(bottle);
+        this.level.salsaBottleLeft.splice(index, 1);
+      }
+    });
+    this.level.salsaBottleRight.forEach((bottle) => {
+      if (this.character.isColliding(bottle)) {
+        this.bottleSound.play();
+        this.character.takeBottle();
+        this.statusbarBottle.setPercentage(this.character.collectedBottles);
+        this.bottleSound.currentTime = 0;
+        let index = this.level.salsaBottleRight.indexOf(bottle);
+        this.level.salsaBottleRight.splice(index, 1);
+      }
+    });
+    this.level.coins.forEach((coin) => {
+      if (this.character.isColliding(coin)) {
+        this.coinSound.play();
+        this.character.takeCoin();
+        this.statusbarCoin.setPercentage(this.character.collectedCoins);
+        this.coinSound.currentTime = 0;
+        let index = this.level.coins.indexOf(coin);
+        this.level.coins.splice(index, 1);
+      }
+    });
+  }
+
+  drawGame() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //To use canvas here, it have to be declared as a variable before
 
     this.ctx.translate(this.cameraX, 0); //Moves the camera
     this.drawObjectOnMap(this.level.background);
     this.drawElementOnMap(this.character);
     this.drawObjectOnMap(this.level.enemies);
+    this.drawObjectOnMap(this.throwableObject);
     this.drawObjectOnMap(this.level.clouds);
     this.drawObjectOnMap(this.level.coins);
     this.drawObjectOnMap(this.level.salsaBottleLeft);
@@ -88,7 +108,7 @@ class World {
     //Call the draw function so often as the grafic card is possible to do it
     let self = this;
     requestAnimationFrame(() => {
-      self.draw();
+      self.drawGame();
     });
   }
 

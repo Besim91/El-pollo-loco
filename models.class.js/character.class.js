@@ -95,19 +95,6 @@ class Character extends MoveableObject {
     }, 30);
   }
 
-  graviation() {
-    setInterval(() => {
-      if (this.isInAir() || this.speedY > 0) {
-        this.y -= this.speedY;
-        this.speedY -= this.acceleration;
-      }
-    }, 60);
-  }
-
-  isInAir() {
-    return this.y < 220;
-  }
-
   animateDeath(arr) {
     for (let i = 0; i < arr.length; i++) {
       let path = arr[i];
@@ -156,4 +143,6 @@ class Character extends MoveableObject {
   deathNoise() {
     this.deathSound.play();
   }
+
+
 }
