@@ -36,6 +36,41 @@ class Character extends MoveableObject {
     // "img/2_character_pepe/5_dead/D-57.png",
   ];
 
+  RELAXING_PEPE = [
+    "img/2_character_pepe/1_idle/idle/I-1.png",
+    "img/2_character_pepe/1_idle/idle/I-2.png",
+    "img/2_character_pepe/1_idle/idle/I-3.png",
+    "img/2_character_pepe/1_idle/idle/I-4.png",
+    "img/2_character_pepe/1_idle/idle/I-5.png",
+    "img/2_character_pepe/1_idle/idle/I-6.png",
+    "img/2_character_pepe/1_idle/idle/I-7.png",
+    "img/2_character_pepe/1_idle/idle/I-8.png",
+    "img/2_character_pepe/1_idle/idle/I-9.png",
+    "img/2_character_pepe/1_idle/idle/I-10.png",
+    "img/2_character_pepe/1_idle/long_idle/I-11.png",
+    "img/2_character_pepe/1_idle/long_idle/I-12.png",
+    "img/2_character_pepe/1_idle/long_idle/I-13.png",
+    "img/2_character_pepe/1_idle/long_idle/I-14.png",
+    "img/2_character_pepe/1_idle/long_idle/I-15.png",
+    "img/2_character_pepe/1_idle/long_idle/I-16.png",
+    "img/2_character_pepe/1_idle/long_idle/I-17.png",
+    "img/2_character_pepe/1_idle/long_idle/I-18.png",
+    "img/2_character_pepe/1_idle/long_idle/I-19.png",
+    "img/2_character_pepe/1_idle/long_idle/I-20.png",
+  ];
+  SLEEPING_PEPE = [
+    "img/2_character_pepe/1_idle/long_idle/I-11.png",
+    "img/2_character_pepe/1_idle/long_idle/I-12.png",
+    "img/2_character_pepe/1_idle/long_idle/I-13.png",
+    "img/2_character_pepe/1_idle/long_idle/I-14.png",
+    "img/2_character_pepe/1_idle/long_idle/I-15.png",
+    "img/2_character_pepe/1_idle/long_idle/I-16.png",
+    "img/2_character_pepe/1_idle/long_idle/I-17.png",
+    "img/2_character_pepe/1_idle/long_idle/I-18.png",
+    "img/2_character_pepe/1_idle/long_idle/I-19.png",
+    "img/2_character_pepe/1_idle/long_idle/I-20.png",
+  ];
+
   world;
   width = 150;
   height = 300;
@@ -45,6 +80,9 @@ class Character extends MoveableObject {
   jumpSound = new Audio("audio/jump.mp3");
   hurtSound = new Audio("audio/hurt.mp3");
   deathSound = new Audio("audio/deathPepe.mp3");
+  currentTime = 0;
+  lastMove = 0;
+  pepeRelaxed = false;
 
   constructor() {
     super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");
@@ -53,27 +91,47 @@ class Character extends MoveableObject {
     this.loadImages(this.JUMPING_PEPE);
     this.loadImages(this.HURT_PEPE);
     this.loadImages(this.DEATH_PEPE);
+    this.loadImages(this.RELAXING_PEPE);
+    this.loadImages(this.SLEEPING_PEPE);
     this.playAnimation();
     this.graviation();
   }
 
+  calculateTimeDiff() {
+    let timeDiff = this.currentTime - this.lastMove;
+    return timeDiff / 1000;
+  }
+
+  safeLastKeyPress() {
+    this.lastMove = new Date().getTime();
+  }
+
   playAnimation() {
     this.walkingSound.pause();
+
     setInterval(() => {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.end_x) {
         this.moveRight();
         this.otherDirection = false;
+        this.world.throwableObject.otherDirection = false;
         this.walkingNois();
+        this.safeLastKeyPress();
+        this.pepeRelaxed = false;
       }
       if (this.world.keyboard.LEFT && this.x > -599) {
         this.moveLeft();
         this.otherDirection = true;
+        this.world.throwableObject.otherDirection = true;
         this.walkingNois();
+        this.safeLastKeyPress();
+        this.pepeRelaxed = false;
       }
       if (this.world.keyboard.SPACE && !this.isInAir()) {
         // The second condition is to avoid jumping during to be in air
         this.jump();
         this.jumpSound.play();
+        this.safeLastKeyPress();
+        this.pepeRelaxed = false;
       }
       if (this.isDead()) {
         this.animateDeath(this.DEATH_PEPE);
@@ -83,8 +141,26 @@ class Character extends MoveableObject {
         this.animate(this.HURT_PEPE);
         // this.hurtNois();
       }
-      this.world.cameraX = -this.x + 100; //Moves the camera to te opposite side of walking. +100 to place the camera littl bit forward
+
+      this.world.cameraX = -this.x + 100; //Moves the camera to the opposite side of walking. +100 to place the camera a little bit forward
     }, 1000 / 60);
+
+    setInterval(() => {
+      if (
+        this.calculateTimeDiff() > 5 &&
+        this.calculateTimeDiff() < 8 &&
+        !this.pepeRelaxed
+      ) {
+        this.animate(this.RELAXING_PEPE);
+        this.pepeRelaxed = true;
+      }
+
+      if (this.calculateTimeDiff() > 7) {
+        this.animate(this.SLEEPING_PEPE);
+      }
+      this.currentTime = new Date().getTime();
+      this.calculateTimeDiff();
+    }, 500);
 
     setInterval(() => {
       if (this.isInAir()) {
@@ -128,6 +204,10 @@ class Character extends MoveableObject {
     }
   }
 
+  isRealing() {
+    if (this.world.keyboard.RIGHT);
+  }
+
   walkingNois() {
     if (!this.isInAir()) {
       this.walkingSound.volume = 0.5;
@@ -143,6 +223,4 @@ class Character extends MoveableObject {
   deathNoise() {
     this.deathSound.play();
   }
-
-
 }

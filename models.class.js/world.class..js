@@ -8,6 +8,7 @@ class World {
   statusbar = new Statusbar();
   statusbarBottle = new StatusbarBottle();
   statusbarCoin = new StatusbarCoin();
+  statusbarEndboss = new StatusbarEndboss();
   bottleSound = new Audio("audio/bottle.mp3");
   coinSound = new Audio("audio/coin.mp3");
   throwableObject = [];
@@ -82,6 +83,18 @@ class World {
         this.level.coins.splice(index, 1);
       }
     });
+    this.throwableObject.forEach((bottle) => {
+      this.level.enemies.forEach((enemy) => {
+        if (!bottle.brokenFlag && bottle.isColliding(enemy)) {
+          bottle.brokenFlag = true;
+          setTimeout(() => {
+            let index = this.throwableObject.indexOf(bottle);
+            this.throwableObject.splice(index, 1);
+          }, 300);
+          bottle.splash();
+        }
+      });
+    });
   }
 
   drawGame() {
@@ -101,6 +114,7 @@ class World {
     this.drawElementOnMap(this.statusbar);
     this.drawElementOnMap(this.statusbarBottle);
     this.drawElementOnMap(this.statusbarCoin);
+    this.drawElementOnMap(this.statusbarEndboss);
     this.ctx.translate(this.cameraX, 0); //Moves the camera
 
     this.ctx.translate(-this.cameraX, 0); //Moves the camera back

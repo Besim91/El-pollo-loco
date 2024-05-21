@@ -51,7 +51,6 @@ class MoveableObject extends DrawableObject {
   takeBottle() {
     this.collectedBottles += 10;
     this.throwablebottles += 10;
-    console.log(this.collectedBottles);
   }
 
   takeCoin() {
