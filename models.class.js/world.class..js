@@ -49,7 +49,7 @@ class World {
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-        this.character.hit();
+        this.character.hit(2);
         this.statusbar.setPercentage(this.character.energy);
       }
     });
@@ -92,6 +92,7 @@ class World {
             this.throwableObject.splice(index, 1);
           }, 300);
           bottle.splash();
+          enemy.hit(15);
         }
       });
     });

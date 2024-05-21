@@ -29,8 +29,8 @@ class MoveableObject extends DrawableObject {
     this.speedY = 40;
   }
 
-  hit() {
-    this.energy -= 2;
+  hit(damage) {
+    this.energy -= damage;
     if (this.energy < 0) {
       this.energy = 0;
     } else {
@@ -71,6 +71,13 @@ class MoveableObject extends DrawableObject {
       return true;
     } else {
       return this.y < 220;
+    }
+  }
+
+  hitEnemy() {
+    this.energy -= 15;
+    if (this.energy < 0) {
+      this.energy = 0;
     }
   }
 }

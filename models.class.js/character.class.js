@@ -133,10 +133,7 @@ class Character extends MoveableObject {
         this.safeLastKeyPress();
         this.pepeRelaxed = false;
       }
-      if (this.isDead()) {
-        this.animateDeath(this.DEATH_PEPE);
-        // this.deathNoise();
-      }
+
       if (this.isHurt()) {
         this.animate(this.HURT_PEPE);
         // this.hurtNois();
@@ -158,6 +155,12 @@ class Character extends MoveableObject {
       if (this.calculateTimeDiff() > 7) {
         this.animate(this.SLEEPING_PEPE);
       }
+
+      if (this.isDead()) {
+        this.animateDeath(this.DEATH_PEPE);
+        // this.deathNoise();
+      }
+
       this.currentTime = new Date().getTime();
       this.calculateTimeDiff();
     }, 500);
