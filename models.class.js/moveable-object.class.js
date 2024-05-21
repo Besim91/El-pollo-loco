@@ -7,6 +7,7 @@ class MoveableObject extends DrawableObject {
   collectedBottles = 0;
   throwablebottles = 0;
   collectedCoins = 0;
+  isInjured = false;
 
   isColliding(obj) {
     return (

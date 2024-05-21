@@ -57,14 +57,15 @@ class Endboss extends MoveableObject {
     }, 1000);
 
     setInterval(() => {
-      if (this.isHurt()) {
+      if (this.isHurt() && !this.isInjured) {
         this.animate(this.HURT_ENDBOSS);
         this.startEndbossRun = true;
+        this.isInjured = true;
       }
     }, 1000 / 60);
 
     setInterval(() => {
-      if (this.startEndbossRun) {
+      if (this.startEndbossRun && this.energy > 0) {
         this.animate(this.WALK_ENDBOSS);
         this.moveLeft();
       }

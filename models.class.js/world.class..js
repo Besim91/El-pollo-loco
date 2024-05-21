@@ -93,6 +93,8 @@ class World {
           }, 300);
           bottle.splash();
           enemy.hit(15);
+          enemy.isInjured = false;
+          this.statusbarEndboss.setPercentage(enemy.energy);
         }
       });
     });
