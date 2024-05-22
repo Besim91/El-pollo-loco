@@ -209,8 +209,21 @@ class Character extends MoveableObject {
     }
   }
 
-  isRealing() {
-    if (this.world.keyboard.RIGHT);
+  pushPepeBack(enemyX, enemyWidth) {
+    let pushBackAnimation = setInterval(() => {
+      if (this.x < enemyX) {
+        this.x -= 20;
+        this.y -= 15;
+      }
+      if (this.x + this.width > enemyX + enemyWidth) {
+        this.x += 20;
+        this.y -= 15;
+      }
+    }, 100);
+
+    setTimeout(() => {
+      clearInterval(pushBackAnimation);
+    }, 100);
   }
 
   walkingNois() {

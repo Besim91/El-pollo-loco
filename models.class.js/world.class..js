@@ -49,8 +49,9 @@ class World {
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
-        this.character.hit(2);
+        this.character.hit(10);
         this.statusbar.setPercentage(this.character.energy);
+        this.character.pushPepeBack(enemy.x, enemy.width);
       }
     });
     this.level.salsaBottleLeft.forEach((bottle) => {
