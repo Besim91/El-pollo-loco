@@ -209,15 +209,27 @@ class Character extends MoveableObject {
     }
   }
 
-  pushPepeBack(enemyX, enemyWidth) {
+  pushPepeBack(enemyX, enemyWidth, enemyY, enemy, index) {
     let pushBackAnimation = setInterval(() => {
       if (this.x < enemyX) {
         this.x -= 20;
         this.y -= 15;
+        this.hit(10);
       }
       if (this.x + this.width > enemyX + enemyWidth) {
         this.x += 20;
         this.y -= 15;
+        this.hit(10);
+      }
+      if (this.y + this.height >= enemyY && !this.enemyCrushed) {
+        console.log("Ich treffe von oben");
+        this.speedY = 35;
+        this.enemyCrushed = true;
+        enemy.hit(15);
+        setTimeout(() => {
+          this.world.level.enemies.splice(index, 1);
+          this.enemyCrushed = false;
+        }, 500);
       }
     }, 100);
 

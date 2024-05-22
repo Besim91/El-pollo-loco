@@ -47,13 +47,19 @@ class World {
   }
 
   checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
+    this.level.enemies.forEach((enemy, index) => {
       if (this.character.isColliding(enemy)) {
-        this.character.hit(10);
         this.statusbar.setPercentage(this.character.energy);
-        this.character.pushPepeBack(enemy.x, enemy.width);
+        this.character.pushPepeBack(
+          enemy.x,
+          enemy.width,
+          enemy.y,
+          enemy,
+          index
+        );
       }
     });
+
     this.level.salsaBottleLeft.forEach((bottle) => {
       if (this.character.isColliding(bottle)) {
         this.bottleSound.play();
@@ -64,6 +70,7 @@ class World {
         this.level.salsaBottleLeft.splice(index, 1);
       }
     });
+
     this.level.salsaBottleRight.forEach((bottle) => {
       if (this.character.isColliding(bottle)) {
         this.bottleSound.play();
