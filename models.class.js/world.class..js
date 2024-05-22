@@ -90,11 +90,23 @@ class World {
           setTimeout(() => {
             let index = this.throwableObject.indexOf(bottle);
             this.throwableObject.splice(index, 1);
-          }, 300);
+          }, 20);
           bottle.splash();
-          enemy.hit(15);
           enemy.isInjured = false;
-          this.statusbarEndboss.setPercentage(enemy.energy);
+
+          if (enemy instanceof Endboss) {
+            this.statusbarEndboss.setPercentage(enemy.energy);
+          }
+
+          enemy.hit(15);
+          if (!(enemy instanceof Endboss)) {
+            let index = this.level.enemies.indexOf(enemy);
+            if (index !== -1) {
+              setTimeout(() => {
+                this.level.enemies.splice(index, 1);
+              }, 2000);
+            }
+          }
         }
       });
     });

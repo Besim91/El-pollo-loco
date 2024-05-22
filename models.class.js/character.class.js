@@ -134,13 +134,15 @@ class Character extends MoveableObject {
         this.pepeRelaxed = false;
       }
 
-      if (this.isHurt()) {
+      this.world.cameraX = -this.x + 100; //Moves the camera to the opposite side of walking. +100 to place the camera a little bit forward
+    }, 1000 / 60);
+
+    setInterval(() => {
+      if (this.isHurt() && !this.isInjured) {
         this.animate(this.HURT_PEPE);
         // this.hurtNois();
       }
-
-      this.world.cameraX = -this.x + 100; //Moves the camera to the opposite side of walking. +100 to place the camera a little bit forward
-    }, 1000 / 60);
+    }, 150);
 
     setInterval(() => {
       if (
