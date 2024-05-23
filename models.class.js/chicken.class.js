@@ -2,6 +2,7 @@ class Chicken extends MoveableObject {
   width = 100;
   height = 90;
   energy = 10;
+  deadSound = new Audio("audio/squeak.mp3");
 
   WALKING_CHICKEN = [
     "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
@@ -21,6 +22,8 @@ class Chicken extends MoveableObject {
   playAnimation() {
     let animationInterval = setInterval(() => {
       if (this.energy == 0) {
+        this.deadSound.play();
+        this.deadSound.volume = 0.6;
         this.loadImage("img/3_enemies_chicken/chicken_normal/2_dead/dead.png");
         clearInterval(animationInterval);
         clearInterval(walkInterval);

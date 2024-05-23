@@ -79,7 +79,10 @@ class Character extends MoveableObject {
   walkingSound = new Audio("audio/running.mp3");
   jumpSound = new Audio("audio/jump.mp3");
   hurtSound = new Audio("audio/hurt.mp3");
+  gameOver = new Audio("audio/gameover.mp3");
   deathSound = new Audio("audio/deathPepe.mp3");
+  tiredSound = new Audio("audio/tired.mp3");
+  sleepingSound = new Audio("audio/snoring.mp3");
   currentTime = 0;
   lastMove = 0;
   pepeRelaxed = false;
@@ -117,6 +120,7 @@ class Character extends MoveableObject {
         this.walkingNois();
         this.safeLastKeyPress();
         this.pepeRelaxed = false;
+        this.sleepingSound.pause();
       }
       if (this.world.keyboard.LEFT && this.x > -599) {
         this.moveLeft();
@@ -125,6 +129,7 @@ class Character extends MoveableObject {
         this.walkingNois();
         this.safeLastKeyPress();
         this.pepeRelaxed = false;
+        this.sleepingSound.pause();
       }
       if (this.world.keyboard.SPACE && !this.isInAir()) {
         // The second condition is to avoid jumping during to be in air
@@ -132,6 +137,7 @@ class Character extends MoveableObject {
         this.jumpSound.play();
         this.safeLastKeyPress();
         this.pepeRelaxed = false;
+        this.sleepingSound.pause();
       }
 
       this.world.cameraX = -this.x + 100; //Moves the camera to the opposite side of walking. +100 to place the camera a little bit forward
@@ -140,7 +146,7 @@ class Character extends MoveableObject {
     setInterval(() => {
       if (this.isHurt() && !this.isInjured) {
         this.animate(this.HURT_PEPE);
-        // this.hurtNois();
+        this.hurtNois();
       }
     }, 150);
 
@@ -151,16 +157,19 @@ class Character extends MoveableObject {
         !this.pepeRelaxed
       ) {
         this.animate(this.RELAXING_PEPE);
+        this.tiredSound.play();
         this.pepeRelaxed = true;
       }
 
       if (this.calculateTimeDiff() > 7) {
         this.animate(this.SLEEPING_PEPE);
+        this.sleepingSound.play();
+        this.sleepingSound.volume = 0.3;
       }
 
       if (this.isDead()) {
         this.animateDeath(this.DEATH_PEPE);
-        // this.deathNoise();
+        this.deathNoise();
       }
 
       this.currentTime = new Date().getTime();
@@ -268,5 +277,13 @@ class Character extends MoveableObject {
 
   deathNoise() {
     this.deathSound.play();
+    setTimeout(() => {
+      this.deathSound.pause();
+      this.gameOver.play();
+    }, 1000);
+
+    setTimeout(() => {
+      this.gameOver.pause();
+    }, 2000);
   }
 }

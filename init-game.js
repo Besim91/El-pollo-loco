@@ -8,6 +8,7 @@ function initGame() {
   document.getElementById("jump").classList.add("canvasVisible");
   document.getElementById("throw").classList.add("canvasVisible");
   document.getElementById("startGameBtn").classList.add("hide");
+  document.getElementById("gameMovement").classList.add("hide");
 }
 
 window.addEventListener("keydown", (e) => {

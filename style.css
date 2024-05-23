@@ -18,18 +18,17 @@ body {
   margin: 0;
 }
 
-.gameMovement {
+#gameMovement {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   width: 810px;
   align-items: center;
-  background-color: black;
+  font-family: cursive;
 }
 
 #arrows {
   visibility: hidden;
-  filter: invert();
 }
 
 .arrowRight {
@@ -47,25 +46,30 @@ body {
   font-size: 40px;
   font-weight: bold;
   visibility: hidden;
-  color: white;
 }
 
 .jump {
   font-size: 40px;
   font-weight: bold;
   visibility: hidden;
-  color: white;
 }
 
 #startGameBtn {
   cursor: pointer;
-  width: 300px;
-  height: 300px;
+  width: 500px;
+  height: 500px;
   filter: contrast();
   position: absolute;
-  top: 70px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
+  opacity: 0.2;
+}
+
+#startGameBtn:hover {
+  filter: brightness(0) saturate(100%) invert(29%) sepia(77%) saturate(7393%)
+    hue-rotate(350deg) brightness(104%) contrast(130%);
+  opacity: 1;
 }
 
 #canvas {

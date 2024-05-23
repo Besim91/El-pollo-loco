@@ -11,6 +11,8 @@ class World {
   statusbarEndboss = new StatusbarEndboss();
   bottleSound = new Audio("audio/bottle.mp3");
   coinSound = new Audio("audio/coin.mp3");
+  backgroundMusic = new Audio("audio/background.mp3");
+  backgroundAnimalSound = new Audio("audio/animalbackgroundnoise.mp3");
   throwableObject = [];
 
   setWorld() {
@@ -25,6 +27,14 @@ class World {
     this.setWorld();
     this.drawGame();
     this.runGame();
+    this.playBackgroundMusic();
+  }
+
+  playBackgroundMusic() {
+    this.backgroundMusic.play();
+    this.backgroundMusic.volume = 0.4;
+    this.backgroundAnimalSound.play();
+    this.backgroundAnimalSound.volume = 0.4;
   }
 
   throwBottle() {}
@@ -43,6 +53,7 @@ class World {
       if (this.character.throwablebottles > 0) {
         this.character.throwablebottles -= 10;
       }
+      this.character.sleepingSound.pause();
     }
   }
 
@@ -63,6 +74,7 @@ class World {
     this.level.salsaBottleLeft.forEach((bottle) => {
       if (this.character.isColliding(bottle)) {
         this.bottleSound.play();
+        this.bottleSound.volume = 0.2;
         this.character.takeBottle();
         this.statusbarBottle.setPercentage(this.character.collectedBottles);
         this.bottleSound.currentTime = 0;
@@ -74,6 +86,7 @@ class World {
     this.level.salsaBottleRight.forEach((bottle) => {
       if (this.character.isColliding(bottle)) {
         this.bottleSound.play();
+        this.bottleSound.volume = 0.2;
         this.character.takeBottle();
         this.statusbarBottle.setPercentage(this.character.collectedBottles);
         this.bottleSound.currentTime = 0;

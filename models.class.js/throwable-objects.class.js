@@ -21,6 +21,7 @@ class ThrowableObjects extends MoveableObject {
   currentImgIndex = 0;
   brokenFlag = false;
   splashInterval = null;
+  brokeBottle = new Audio("audio/brokenbottle.mp3");
 
   constructor(x, y) {
     super().loadImages(this.THROWABLE_OBJECT);
@@ -47,6 +48,7 @@ class ThrowableObjects extends MoveableObject {
   }
 
   splash() {
+    this.brokeBottle.play();
     this.currentImgIndex = 0;
     if (this.splashInterval) clearInterval(this.splashInterval);
     this.splashInterval = setInterval(() => {
