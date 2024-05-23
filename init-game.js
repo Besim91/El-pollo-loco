@@ -3,6 +3,11 @@ keyboard = new KEYBOARD();
 function initGame() {
   let canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
+  document.getElementById("canvas").classList.add("canvasVisible");
+  document.getElementById("arrows").classList.add("canvasVisible");
+  document.getElementById("jump").classList.add("canvasVisible");
+  document.getElementById("throw").classList.add("canvasVisible");
+  document.getElementById("startGameBtn").classList.add("hide");
 }
 
 window.addEventListener("keydown", (e) => {

@@ -30,9 +30,18 @@
     <script src="./init-game.js"></script>
 </head>
 
-<body onload="initGame()">
+<body>
+    <img onclick="initGame()" id="startGameBtn" src="./img/10_arrows/startBtn.png" alt="">
 
-    <canvas id="canvas" width="800" height="600"></canvas>
+    <canvas id="canvas" class="" width="800" height="600"></canvas>
+    <div class="gameMovement">
+        <span id="throw" class="throw">Throw: D</span>
+        <span id="jump" class="jump">Jump: SPACE</span>
+        <div id="arrows">
+            <img class="arrowRight" src="./img/10_arrows/arrow.png">
+            <img class="arrowLeft" src="./img/10_arrows/arrow.png">
+        </div>
+    </div>
 
 
 </body>

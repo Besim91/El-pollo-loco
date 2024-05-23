@@ -210,18 +210,22 @@ class Character extends MoveableObject {
   }
 
   pushPepeBack(enemyX, enemyWidth, enemyY, enemy, index) {
+    console.log("Character Position Y:", this.y + this.height);
+    console.log("Enemy Position:", enemyY);
+    console.log("SpeedY:", this.speedY);
+    console.log("isInAir:", this.isInAir());
+    console.log("enemyCrushed:", this.enemyCrushed);
+    console.log(
+      "------------------------------------------------------------------------"
+    );
+
     let pushBackAnimation = setInterval(() => {
-      if (this.x < enemyX) {
-        this.x -= 20;
-        this.y -= 15;
-        this.hit(10);
-      }
-      if (this.x + this.width > enemyX + enemyWidth) {
-        this.x += 20;
-        this.y -= 15;
-        this.hit(10);
-      }
-      if (this.y + this.height >= enemyY && !this.enemyCrushed) {
+      if (
+        this.isInAir() &&
+        this.speedY < 0 &&
+        !this.enemyCrushed &&
+        this.y + this.height - 60 <= enemyY
+      ) {
         console.log("Ich treffe von oben");
         this.speedY = 35;
         this.enemyCrushed = true;
@@ -230,8 +234,20 @@ class Character extends MoveableObject {
           this.world.level.enemies.splice(index, 1);
           this.enemyCrushed = false;
         }, 500);
+      } else if (
+        !this.isInAir() &&
+        (this.x < enemyX || this.x + this.width > enemyX + enemyWidth)
+      ) {
+        if (this.x < enemyX) {
+          this.x -= 20;
+        } else {
+          this.x += 20;
+        }
+        this.speedY = 0;
+        this.y -= 15;
+        this.hit(10);
       }
-    }, 100);
+    }, 10);
 
     setTimeout(() => {
       clearInterval(pushBackAnimation);

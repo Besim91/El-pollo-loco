@@ -1,9 +1,80 @@
 #canvas {
   background-color: black;
+  border: solid 5px;
+  border-color: black;
 }
 
 body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  background-image: url(./img/9_intro_outro_screens/start/startscreen_1.png);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+}
+
+.gameMovement {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 810px;
+  align-items: center;
+  background-color: black;
+}
+
+#arrows {
+  visibility: hidden;
+  filter: invert();
+}
+
+.arrowRight {
+  transform: rotate(180deg);
+  width: 100px;
+  height: 100px;
+}
+
+.arrowLeft {
+  width: 100px;
+  height: 100px;
+}
+
+.throw {
+  font-size: 40px;
+  font-weight: bold;
+  visibility: hidden;
+  color: white;
+}
+
+.jump {
+  font-size: 40px;
+  font-weight: bold;
+  visibility: hidden;
+  color: white;
+}
+
+#startGameBtn {
+  cursor: pointer;
+  width: 300px;
+  height: 300px;
+  filter: contrast();
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#canvas {
+  visibility: hidden;
+}
+
+.canvasVisible {
+  visibility: visible !important;
+}
+.hide {
+  visibility: hidden !important;
 }
