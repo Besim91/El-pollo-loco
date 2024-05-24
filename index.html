@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
     <title>El pollo loco</title>
+    <script src="./sound.js"></script>
     <script src="./models.class.js/drawable-object.class.js"></script>
     <script src="./models.class.js/moveable-object.class.js"></script>
     <script src="./models.class.js/statusbar.class.js"></script>
@@ -30,11 +31,11 @@
     <script src="./init-game.js"></script>
 </head>
 
-<body>
-    <img onclick="initGame()" id="startGameBtn" src="./img/10_arrows/startBtn.png" alt="">
+<body onload="initGame()">
 
     <canvas id="canvas" class="" width="800" height="600"></canvas>
     <div id="gameMovement">
+        <img onclick="mute()" id="audioImg" src="img/11_audio/off-sound.svg">
         <span id="throw" class="throw">Throw: D</span>
         <span id="jump" class="jump">Jump: SPACE</span>
         <div id="arrows">

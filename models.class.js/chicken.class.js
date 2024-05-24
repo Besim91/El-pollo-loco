@@ -2,6 +2,7 @@ class Chicken extends MoveableObject {
   width = 100;
   height = 90;
   energy = 10;
+
   deadSound = new Audio("audio/squeak.mp3");
 
   WALKING_CHICKEN = [

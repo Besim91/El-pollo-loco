@@ -9,15 +9,16 @@ class World {
   statusbarBottle = new StatusbarBottle();
   statusbarCoin = new StatusbarCoin();
   statusbarEndboss = new StatusbarEndboss();
-  bottleSound = new Audio("audio/bottle.mp3");
-  coinSound = new Audio("audio/coin.mp3");
-  backgroundMusic = new Audio("audio/background.mp3");
-  backgroundAnimalSound = new Audio("audio/animalbackgroundnoise.mp3");
   throwableObject = [];
   gameInterval;
   drawInterval;
   gameOverImage = new Image();
   gameStopped = false;
+
+  bottleSound = new Audio("audio/bottle.mp3");
+  coinSound = new Audio("audio/coin.mp3");
+  backgroundMusic = new Audio("audio/background.mp3");
+  backgroundAnimalSound = new Audio("audio/animalbackgroundnoise.mp3");
 
   setWorld() {
     this.character.world = this; //Needed for access from character to keyboard. World is defined in the class character
@@ -31,7 +32,10 @@ class World {
     this.setWorld();
     this.drawGame();
     this.runGame();
-    this.playBackgroundMusic();
+
+    setInterval(() => {
+      this.playBackgroundMusic();
+    }, 500);
     this.gameOverImage.src =
       "img/9_intro_outro_screens/game_over/game over.png";
   }
@@ -45,25 +49,43 @@ class World {
         !this.gameStopped)
     ) {
       this.gameStopped = true;
-      clearInterval(this.gameInterval);
-      cancelAnimationFrame(this.drawInterval);
-      this.backgroundMusic.pause();
-      this.backgroundAnimalSound.pause();
-      this.character.pauseAllSounds();
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      this.ctx.drawImage(
-        this.gameOverImage,
-        this.canvas.width / 2 - this.gameOverImage.width / 2,
-        this.canvas.height / 2 - this.gameOverImage.height / 2
-      );
+      setTimeout(() => {
+        clearInterval(this.gameInterval);
+        cancelAnimationFrame(this.drawInterval);
+        this.backgroundMusic.pause();
+        this.backgroundAnimalSound.pause();
+        this.character.pauseAllSounds();
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.drawImage(
+          this.gameOverImage,
+          this.canvas.width / 2 - this.gameOverImage.width / 2,
+          this.canvas.height / 2 - this.gameOverImage.height / 2
+        );
+
+        // Erstellen und Hinzufügen des Start-Buttons
+        const startButton = document.createElement("button");
+        startButton.id = "game-button";
+        startButton.textContent = "Back to start";
+        startButton.onclick = () => location.reload(); // Seite neu laden beim Klicken des Buttons
+
+        // Stelle sicher, dass der Button nur einmal hinzugefügt wird
+        if (!document.getElementById("start-button")) {
+          document.body.appendChild(startButton);
+        }
+      }, 1300);
     }
   }
 
   playBackgroundMusic() {
-    this.backgroundMusic.play();
-    this.backgroundMusic.volume = 0.4;
-    this.backgroundAnimalSound.play();
-    this.backgroundAnimalSound.volume = 0.4;
+    if (window.sound) {
+      this.backgroundMusic.play();
+      this.backgroundMusic.volume = 0.4;
+      this.backgroundAnimalSound.play();
+      this.backgroundAnimalSound.volume = 0.4;
+    } else {
+      this.backgroundMusic.pause();
+      this.backgroundAnimalSound.pause();
+    }
   }
 
   runGame() {

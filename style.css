@@ -2,6 +2,7 @@
   background-color: black;
   border: solid 5px;
   border-color: black;
+  border-radius: 25px;
 }
 
 body {
@@ -10,11 +11,6 @@ body {
   justify-content: center;
   flex-direction: column;
   height: 100vh;
-  background-image: url(./img/9_intro_outro_screens/start/startscreen_1.png);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
   margin: 0;
 }
 
@@ -27,9 +23,9 @@ body {
   font-family: cursive;
 }
 
-#arrows {
+/* #arrows {
   visibility: hidden;
-}
+} */
 
 .arrowRight {
   transform: rotate(180deg);
@@ -45,13 +41,13 @@ body {
 .throw {
   font-size: 40px;
   font-weight: bold;
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 
 .jump {
   font-size: 40px;
   font-weight: bold;
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 
 #startGameBtn {
@@ -72,8 +68,15 @@ body {
   opacity: 1;
 }
 
-#canvas {
-  visibility: hidden;
+#audioImg:hover {
+  cursor: pointer;
+  filter: brightness(0) saturate(100%) invert(29%) sepia(77%) saturate(7393%)
+    hue-rotate(350deg) brightness(104%) contrast(130%);
+}
+
+#audioImg {
+  width: 60px;
+  height: 60px;
 }
 
 .canvasVisible {
@@ -81,4 +84,20 @@ body {
 }
 .hide {
   visibility: hidden !important;
+}
+
+#game-button {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  width: 300px;
+  height: 100px;
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  background-color: red;
+  border-radius: 0 0 25px 25px;
+  box-shadow: 0px 7px 1px rgba(0, 0, 0, 0.5);
 }

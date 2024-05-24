@@ -76,16 +76,16 @@ class Character extends MoveableObject {
   height = 300;
   speed = 8;
   otherDirection;
-  walkingSound = new Audio("audio/running.mp3");
-  jumpSound = new Audio("audio/jump.mp3");
-  hurtSound = new Audio("audio/hurt.mp3");
-
-  deathSound = new Audio("audio/deathPepe.mp3");
-  tiredSound = new Audio("audio/tired.mp3");
-  sleepingSound = new Audio("audio/snoring.mp3");
   currentTime = 0;
   lastMove = 0;
   pepeRelaxed = false;
+
+  walkingSound = new Audio("audio/running.mp3");
+  jumpSound = new Audio("audio/jump.mp3");
+  hurtSound = new Audio("audio/hurt.mp3");
+  deathSound = new Audio("audio/deathPepe.mp3");
+  tiredSound = new Audio("audio/tired.mp3");
+  sleepingSound = new Audio("audio/snoring.mp3");
 
   constructor() {
     super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");
