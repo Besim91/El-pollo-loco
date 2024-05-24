@@ -22,4 +22,15 @@ class Level {
     this.salsaBottleLeft = salsaBottleLeft;
     this.salsaBottleRight = salsaBottleRight;
   }
+
+  respawnEnemies(characterX) {
+    this.enemies.forEach((enemy) => {
+      if (
+        !(enemy instanceof Endboss) &&
+        enemy.x + enemy.width < characterX - 200
+      ) {
+        enemy.x = characterX + 1000; // Beispiel: 200 Pixel vor dem Charakter
+      }
+    });
+  }
 }

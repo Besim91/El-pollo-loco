@@ -14,9 +14,13 @@ class World {
   backgroundMusic = new Audio("audio/background.mp3");
   backgroundAnimalSound = new Audio("audio/animalbackgroundnoise.mp3");
   throwableObject = [];
+  gameInterval;
+  drawInterval;
+  gameOverImage = new Image();
+  gameStopped = false;
 
   setWorld() {
-    this.character.world = this; //Needed for accsses from charcter to keyboard. World is defined in the class charachter
+    this.character.world = this; //Needed for access from character to keyboard. World is defined in the class character
     this.throwableObject.world = this;
   }
 
@@ -28,6 +32,31 @@ class World {
     this.drawGame();
     this.runGame();
     this.playBackgroundMusic();
+    this.gameOverImage.src =
+      "img/9_intro_outro_screens/game_over/game over.png";
+  }
+
+  stopGame() {
+    if (
+      (this.character.isDead() && !this.gameStopped) ||
+      (this.level.enemies.some(
+        (enemy) => enemy instanceof Endboss && enemy.endbossDead
+      ) &&
+        !this.gameStopped)
+    ) {
+      this.gameStopped = true;
+      clearInterval(this.gameInterval);
+      cancelAnimationFrame(this.drawInterval);
+      this.backgroundMusic.pause();
+      this.backgroundAnimalSound.pause();
+      this.character.pauseAllSounds();
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.drawImage(
+        this.gameOverImage,
+        this.canvas.width / 2 - this.gameOverImage.width / 2,
+        this.canvas.height / 2 - this.gameOverImage.height / 2
+      );
+    }
   }
 
   playBackgroundMusic() {
@@ -37,12 +66,11 @@ class World {
     this.backgroundAnimalSound.volume = 0.4;
   }
 
-  throwBottle() {}
-
   runGame() {
-    setInterval(() => {
+    this.gameInterval = setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
+      this.stopGame();
     }, 100);
   }
 
@@ -74,7 +102,7 @@ class World {
     this.level.salsaBottleLeft.forEach((bottle) => {
       if (this.character.isColliding(bottle)) {
         this.bottleSound.play();
-        this.bottleSound.volume = 0.2;
+        this.bottleSound.volume = 0.4;
         this.character.takeBottle();
         this.statusbarBottle.setPercentage(this.character.collectedBottles);
         this.bottleSound.currentTime = 0;
@@ -86,7 +114,7 @@ class World {
     this.level.salsaBottleRight.forEach((bottle) => {
       if (this.character.isColliding(bottle)) {
         this.bottleSound.play();
-        this.bottleSound.volume = 0.2;
+        this.bottleSound.volume = 0.4;
         this.character.takeBottle();
         this.statusbarBottle.setPercentage(this.character.collectedBottles);
         this.bottleSound.currentTime = 0;
@@ -134,7 +162,7 @@ class World {
   }
 
   drawGame() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //To use canvas here, it have to be declared as a variable before
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); //To use canvas here, it has to be declared as a variable before
 
     this.ctx.translate(this.cameraX, 0); //Moves the camera
     this.drawObjectOnMap(this.level.background);
@@ -155,11 +183,11 @@ class World {
 
     this.ctx.translate(-this.cameraX, 0); //Moves the camera back
 
-    //Call the draw function so often as the grafic card is possible to do it
-    let self = this;
-    requestAnimationFrame(() => {
-      self.drawGame();
+    //Call the draw function as often as the graphic card can handle it
+    this.drawInterval = requestAnimationFrame(() => {
+      this.drawGame();
     });
+    this.level.respawnEnemies(this.character.x);
   }
 
   //The selected object is going to be created

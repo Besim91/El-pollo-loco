@@ -9,6 +9,7 @@ class MoveableObject extends DrawableObject {
   collectedCoins = 0;
   isInjured = false;
   enemyCrushed = false;
+  gameOver = new Audio("audio/gameover.mp3");
 
   isColliding(obj) {
     return (

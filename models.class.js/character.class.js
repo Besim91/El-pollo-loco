@@ -79,7 +79,7 @@ class Character extends MoveableObject {
   walkingSound = new Audio("audio/running.mp3");
   jumpSound = new Audio("audio/jump.mp3");
   hurtSound = new Audio("audio/hurt.mp3");
-  gameOver = new Audio("audio/gameover.mp3");
+
   deathSound = new Audio("audio/deathPepe.mp3");
   tiredSound = new Audio("audio/tired.mp3");
   sleepingSound = new Audio("audio/snoring.mp3");
@@ -147,6 +147,7 @@ class Character extends MoveableObject {
       if (this.isHurt() && !this.isInjured) {
         this.animate(this.HURT_PEPE);
         this.hurtNois();
+        this.sleepingSound.pause();
       }
     }, 150);
 
@@ -285,5 +286,15 @@ class Character extends MoveableObject {
     setTimeout(() => {
       this.gameOver.pause();
     }, 2000);
+  }
+
+  pauseAllSounds() {
+    this.walkingSound.pause();
+    this.jumpSound.pause();
+    this.hurtSound.pause();
+    this.gameOver.pause();
+    this.deathSound.pause();
+    this.tiredSound.pause();
+    this.sleepingSound.pause();
   }
 }

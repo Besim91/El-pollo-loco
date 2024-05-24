@@ -53,6 +53,7 @@ class Endboss extends MoveableObject {
       if (this.energy == 0 && !this.endbossDead) {
         this.animate(this.DEAD_ENDBOSS);
         this.endbossDead = true;
+        this.gameOver.play();
       }
     }, 1000);
 
