@@ -48,7 +48,11 @@ class ThrowableObjects extends MoveableObject {
   }
 
   splash() {
-    this.brokeBottle.play();
+    if (window.sound) {
+      this.brokeBottle.play();
+      this.brokeBottle.volume = 0.6;
+    }
+
     this.currentImgIndex = 0;
     if (this.splashInterval) clearInterval(this.splashInterval);
     this.splashInterval = setInterval(() => {

@@ -28,15 +28,31 @@ class Endboss extends MoveableObject {
     "img/4_enemie_boss_chicken/1_walk/G3.png",
     "img/4_enemie_boss_chicken/1_walk/G4.png",
   ];
+
+  ATTACK_ENDBOSS = [
+    "img/4_enemie_boss_chicken/3_attack/G13.png",
+    "img/4_enemie_boss_chicken/3_attack/G14.png",
+    "img/4_enemie_boss_chicken/3_attack/G15.png",
+    "img/4_enemie_boss_chicken/3_attack/G16.png",
+    "img/4_enemie_boss_chicken/3_attack/G17.png",
+    "img/4_enemie_boss_chicken/3_attack/G18.png",
+    "img/4_enemie_boss_chicken/3_attack/G19.png",
+    "img/4_enemie_boss_chicken/3_attack/G20.png",
+  ];
+
   endbossDead = false;
   startEndbossRun = false;
-  speed = 7;
+  speed = 50;
+
+  dinoSound = new Audio("audio/dinochicken.mp3");
+  dinoWalk = new Audio("audio/dinowalk.mp3");
 
   constructor() {
     super().loadImages(this.ENDBOSS);
     this.loadImages(this.DEAD_ENDBOSS);
     this.loadImages(this.HURT_ENDBOSS);
     this.loadImages(this.WALK_ENDBOSS);
+    this.loadImages(this.ATTACK_ENDBOSS);
     this.playAnimation();
     this.y = 110;
     this.x = 4300;
@@ -53,7 +69,10 @@ class Endboss extends MoveableObject {
       if (this.energy == 0 && !this.endbossDead) {
         this.animate(this.DEAD_ENDBOSS);
         this.endbossDead = true;
-        this.gameOver.play();
+        if (window.sound) {
+          this.gameOver.play();
+        }
+        document.getElementById("endScreen").style.display = "block";
       }
     }, 1000);
 
@@ -66,9 +85,23 @@ class Endboss extends MoveableObject {
     }, 1000 / 60);
 
     setInterval(() => {
-      if (this.startEndbossRun && this.energy > 0) {
+      if (this.energy < 100 && this.energy > 80) {
+        this.animate(this.ATTACK_ENDBOSS);
+        if (window.sound) {
+          this.dinoSound.play();
+          this.dinoSound.volume = 0.7;
+        }
+      }
+    }, 350);
+
+    setInterval(() => {
+      if (this.startEndbossRun && this.energy > 0 && this.energy <= 80) {
         this.animate(this.WALK_ENDBOSS);
         this.moveLeft();
+        if (window.sound) {
+          this.dinoWalk.play();
+          this.dinoWalk.volume = 0.3;
+        }
       }
     }, 300);
   }

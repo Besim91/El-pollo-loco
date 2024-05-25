@@ -21,6 +21,13 @@ class MoveableObject extends DrawableObject {
     ); // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
   }
 
+  oneCycle(arr) {
+    for (let i = 0; i < arr.length; i++) {
+      let path = arr[i];
+      this.img = this.imageChache[path];
+    }
+  }
+
   moveLeft() {
     this.x -= this.speed;
   }

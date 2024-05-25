@@ -79,6 +79,7 @@ class Character extends MoveableObject {
   currentTime = 0;
   lastMove = 0;
   pepeRelaxed = false;
+  throwCooldown = false;
 
   walkingSound = new Audio("audio/running.mp3");
   jumpSound = new Audio("audio/jump.mp3");
@@ -117,7 +118,9 @@ class Character extends MoveableObject {
         this.moveRight();
         this.otherDirection = false;
         this.world.throwableObject.otherDirection = false;
-        this.walkingNois();
+        if (window.sound) {
+          this.walkingNois();
+        }
         this.safeLastKeyPress();
         this.pepeRelaxed = false;
         this.sleepingSound.pause();
@@ -126,7 +129,9 @@ class Character extends MoveableObject {
         this.moveLeft();
         this.otherDirection = true;
         this.world.throwableObject.otherDirection = true;
-        this.walkingNois();
+        if (window.sound) {
+          this.walkingNois();
+        }
         this.safeLastKeyPress();
         this.pepeRelaxed = false;
         this.sleepingSound.pause();
@@ -134,9 +139,11 @@ class Character extends MoveableObject {
       if (this.world.keyboard.SPACE && !this.isInAir()) {
         // The second condition is to avoid jumping during to be in air
         this.jump();
-        this.jumpSound.play();
-        this.safeLastKeyPress();
+        if (window.sound) {
+          this.jumpSound.play();
+        }
         this.pepeRelaxed = false;
+        this.safeLastKeyPress();
         this.sleepingSound.pause();
       }
 
@@ -146,7 +153,9 @@ class Character extends MoveableObject {
     setInterval(() => {
       if (this.isHurt() && !this.isInjured) {
         this.animate(this.HURT_PEPE);
-        this.hurtNois();
+        if (window.sound) {
+          this.hurtNois();
+        }
         this.sleepingSound.pause();
       }
     }, 150);
@@ -158,24 +167,32 @@ class Character extends MoveableObject {
         !this.pepeRelaxed
       ) {
         this.animate(this.RELAXING_PEPE);
-        this.tiredSound.play();
+        if (window.sound) {
+          this.tiredSound.play();
+        }
         this.pepeRelaxed = true;
       }
 
       if (this.calculateTimeDiff() > 7) {
         this.animate(this.SLEEPING_PEPE);
-        this.sleepingSound.play();
+        if (window.sound) {
+          this.sleepingSound.play();
+        }
         this.sleepingSound.volume = 0.3;
       }
 
       if (this.isDead()) {
-        this.animateDeath(this.DEATH_PEPE);
-        this.deathNoise();
+        this.oneCycle(this.DEATH_PEPE);
+        if (window.sound) {
+          this.deathNoise();
+        }
+        document.getElementById("canvas").classList.add("d-none");
+        document.getElementById("endScreen").classList.remove("d-none");
       }
 
       this.currentTime = new Date().getTime();
       this.calculateTimeDiff();
-    }, 500);
+    }, 100);
 
     setInterval(() => {
       if (this.isInAir()) {
@@ -184,13 +201,6 @@ class Character extends MoveableObject {
         this.animate(this.WALKING_PEPE);
       }
     }, 30);
-  }
-
-  animateDeath(arr) {
-    for (let i = 0; i < arr.length; i++) {
-      let path = arr[i];
-      this.img = this.imageChache[path];
-    }
   }
 
   animateJump(arr) {
@@ -220,15 +230,6 @@ class Character extends MoveableObject {
   }
 
   pushPepeBack(enemyX, enemyWidth, enemyY, enemy, index) {
-    console.log("Character Position Y:", this.y + this.height);
-    console.log("Enemy Position:", enemyY);
-    console.log("SpeedY:", this.speedY);
-    console.log("isInAir:", this.isInAir());
-    console.log("enemyCrushed:", this.enemyCrushed);
-    console.log(
-      "------------------------------------------------------------------------"
-    );
-
     let pushBackAnimation = setInterval(() => {
       if (
         this.isInAir() &&
@@ -236,7 +237,6 @@ class Character extends MoveableObject {
         !this.enemyCrushed &&
         this.y + this.height - 60 <= enemyY
       ) {
-        console.log("Ich treffe von oben");
         this.speedY = 35;
         this.enemyCrushed = true;
         enemy.hit(15);
@@ -286,15 +286,5 @@ class Character extends MoveableObject {
     setTimeout(() => {
       this.gameOver.pause();
     }, 2000);
-  }
-
-  pauseAllSounds() {
-    this.walkingSound.pause();
-    this.jumpSound.pause();
-    this.hurtSound.pause();
-    this.gameOver.pause();
-    this.deathSound.pause();
-    this.tiredSound.pause();
-    this.sleepingSound.pause();
   }
 }

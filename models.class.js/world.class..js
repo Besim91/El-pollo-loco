@@ -12,13 +12,12 @@ class World {
   throwableObject = [];
   gameInterval;
   drawInterval;
-  gameOverImage = new Image();
-  gameStopped = false;
 
   bottleSound = new Audio("audio/bottle.mp3");
   coinSound = new Audio("audio/coin.mp3");
   backgroundMusic = new Audio("audio/background.mp3");
   backgroundAnimalSound = new Audio("audio/animalbackgroundnoise.mp3");
+  swing = new Audio("audio/swing.mp3");
 
   setWorld() {
     this.character.world = this; //Needed for access from character to keyboard. World is defined in the class character
@@ -35,45 +34,7 @@ class World {
 
     setInterval(() => {
       this.playBackgroundMusic();
-    }, 500);
-    this.gameOverImage.src =
-      "img/9_intro_outro_screens/game_over/game over.png";
-  }
-
-  stopGame() {
-    if (
-      (this.character.isDead() && !this.gameStopped) ||
-      (this.level.enemies.some(
-        (enemy) => enemy instanceof Endboss && enemy.endbossDead
-      ) &&
-        !this.gameStopped)
-    ) {
-      this.gameStopped = true;
-      setTimeout(() => {
-        clearInterval(this.gameInterval);
-        cancelAnimationFrame(this.drawInterval);
-        this.backgroundMusic.pause();
-        this.backgroundAnimalSound.pause();
-        this.character.pauseAllSounds();
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.drawImage(
-          this.gameOverImage,
-          this.canvas.width / 2 - this.gameOverImage.width / 2,
-          this.canvas.height / 2 - this.gameOverImage.height / 2
-        );
-
-        // Erstellen und Hinzufügen des Start-Buttons
-        const startButton = document.createElement("button");
-        startButton.id = "game-button";
-        startButton.textContent = "Back to start";
-        startButton.onclick = () => location.reload(); // Seite neu laden beim Klicken des Buttons
-
-        // Stelle sicher, dass der Button nur einmal hinzugefügt wird
-        if (!document.getElementById("start-button")) {
-          document.body.appendChild(startButton);
-        }
-      }, 1300);
-    }
+    }, 150);
   }
 
   playBackgroundMusic() {
@@ -92,21 +53,34 @@ class World {
     this.gameInterval = setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
-      this.stopGame();
-    }, 100);
+    }, 10);
   }
 
   checkThrowObjects() {
-    if (this.keyboard.D == true && this.character.throwablebottles > 0) {
+    if (
+      this.keyboard.D == true &&
+      this.character.throwablebottles > 0 &&
+      !this.character.throwCooldown
+    ) {
+      this.swing.currentTime = 0;
+      if (window.sound) {
+        this.swing.play();
+      }
+
       let bottle = new ThrowableObjects(this.character.x, this.character.y);
       this.throwableObject.push(bottle);
       if (this.character.throwablebottles > 0) {
         this.character.throwablebottles -= 10;
       }
+
       this.character.sleepingSound.pause();
+
+      this.character.throwCooldown = true;
+      setTimeout(() => {
+        this.character.throwCooldown = false;
+      }, 1000); //
     }
   }
-
   checkCollisions() {
     this.level.enemies.forEach((enemy, index) => {
       if (this.character.isColliding(enemy)) {
@@ -123,8 +97,10 @@ class World {
 
     this.level.salsaBottleLeft.forEach((bottle) => {
       if (this.character.isColliding(bottle)) {
-        this.bottleSound.play();
-        this.bottleSound.volume = 0.4;
+        if (window.sound) {
+          this.bottleSound.play();
+          this.bottleSound.volume = 0.4;
+        }
         this.character.takeBottle();
         this.statusbarBottle.setPercentage(this.character.collectedBottles);
         this.bottleSound.currentTime = 0;
@@ -135,8 +111,10 @@ class World {
 
     this.level.salsaBottleRight.forEach((bottle) => {
       if (this.character.isColliding(bottle)) {
-        this.bottleSound.play();
-        this.bottleSound.volume = 0.4;
+        if (window.sound) {
+          this.bottleSound.play();
+          this.bottleSound.volume = 0.4;
+        }
         this.character.takeBottle();
         this.statusbarBottle.setPercentage(this.character.collectedBottles);
         this.bottleSound.currentTime = 0;
@@ -146,7 +124,9 @@ class World {
     });
     this.level.coins.forEach((coin) => {
       if (this.character.isColliding(coin)) {
-        this.coinSound.play();
+        if (window.sound) {
+          this.coinSound.play();
+        }
         this.character.takeCoin();
         this.statusbarCoin.setPercentage(this.character.collectedCoins);
         this.coinSound.currentTime = 0;
@@ -243,5 +223,32 @@ class World {
       mo.x = mo.x * -1; //Sets the axe back to the origin form
       this.ctx.restore(); //Sets the saved status back
     }
+  }
+
+  resetGame() {
+    // Stoppe die Intervalle
+    clearInterval(this.gameInterval);
+    cancelAnimationFrame(this.drawInterval);
+
+    // Setze die Spielobjekte zurück
+    this.character = new Character();
+    this.level = level1;
+    this.cameraX = 0;
+    this.statusbar = new Statusbar();
+    this.statusbarBottle = new StatusbarBottle();
+    this.statusbarCoin = new StatusbarCoin();
+    this.statusbarEndboss = new StatusbarEndboss();
+    this.throwableObject = [];
+
+    // Setze die Sounds zurück
+    this.backgroundMusic.pause();
+    this.backgroundAnimalSound.pause();
+    this.backgroundMusic.currentTime = 0;
+    this.backgroundAnimalSound.currentTime = 0;
+
+    // Initialisiere das Spiel neu
+    this.setWorld();
+    this.drawGame();
+    this.runGame();
   }
 }
