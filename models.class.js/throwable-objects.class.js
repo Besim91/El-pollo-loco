@@ -21,13 +21,15 @@ class ThrowableObjects extends MoveableObject {
   currentImgIndex = 0;
   brokenFlag = false;
   splashInterval = null;
+
   brokeBottle = new Audio("audio/brokenbottle.mp3");
 
-  constructor(x, y) {
+  constructor(x, y, world) {
     super().loadImages(this.THROWABLE_OBJECT);
     this.loadImages(this.BOTTLE_SPLASH);
     this.playAnimation();
     this.throw(x, y);
+    this.world = world; // Übergebe die Referenz auf die Welt
   }
 
   playAnimation() {
@@ -43,7 +45,11 @@ class ThrowableObjects extends MoveableObject {
     this.graviation();
 
     setInterval(() => {
-      this.x += 10;
+      if (!this.world.character.otherDirection) {
+        this.x += 10;
+      } else {
+        this.x -= 10;
+      }
     }, 1000 / 60);
   }
 

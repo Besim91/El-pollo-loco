@@ -21,7 +21,6 @@ class World {
 
   setWorld() {
     this.character.world = this; //Needed for access from character to keyboard. World is defined in the class character
-    this.throwableObject.world = this;
   }
 
   constructor(canvas, keyboard) {
@@ -67,7 +66,11 @@ class World {
         this.swing.play();
       }
 
-      let bottle = new ThrowableObjects(this.character.x, this.character.y);
+      let bottle = new ThrowableObjects(
+        this.character.x,
+        this.character.y,
+        this
+      );
       this.throwableObject.push(bottle);
       if (this.character.throwablebottles > 0) {
         this.character.throwablebottles -= 10;
@@ -81,6 +84,7 @@ class World {
       }, 1000); //
     }
   }
+
   checkCollisions() {
     this.level.enemies.forEach((enemy, index) => {
       if (this.character.isColliding(enemy)) {
@@ -122,6 +126,7 @@ class World {
         this.level.salsaBottleRight.splice(index, 1);
       }
     });
+
     this.level.coins.forEach((coin) => {
       if (this.character.isColliding(coin)) {
         if (window.sound) {
@@ -134,6 +139,19 @@ class World {
         this.level.coins.splice(index, 1);
       }
     });
+
+    this.throwableObject.forEach((bottle) => {
+      // Überprüfen, ob die Flasche den Boden erreicht hat (y-Koordinate = 220)------------------------------------------
+      if (bottle.y >= 430) {
+        bottle.brokenFlag = true; // Flasche als zerbrochen markieren
+        setTimeout(() => {
+          let index = this.throwableObject.indexOf(bottle);
+          this.throwableObject.splice(index, 1);
+        }, 20);
+        bottle.splash(); // Simuliere das Brechen der Flasche
+      }
+    });
+
     this.throwableObject.forEach((bottle) => {
       this.level.enemies.forEach((enemy) => {
         if (!bottle.brokenFlag && bottle.isColliding(enemy)) {
@@ -189,7 +207,7 @@ class World {
     this.drawInterval = requestAnimationFrame(() => {
       this.drawGame();
     });
-    this.level.respawnEnemies(this.character.x);
+    this.level.respawnEntities(this.character.x);
   }
 
   //The selected object is going to be created

@@ -11,10 +11,10 @@ function initGame() {
 }
 
 function restartGame() {
+  document.getElementById("endScreen").classList.add("d-none");
+  document.getElementById("canvas").classList.remove("d-none");
   if (this.world) {
     this.world.resetGame(); // Hier das Spiel zurücksetzen, wenn es bereits existiert
-    document.getElementById("endScreen").classList.add("d-none");
-    document.getElementById("canvas").classList.remove("d-none");
   }
 }
 

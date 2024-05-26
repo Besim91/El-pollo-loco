@@ -33,7 +33,6 @@ class Character extends MoveableObject {
     "img/2_character_pepe/5_dead/D-54.png",
     "img/2_character_pepe/5_dead/D-55.png",
     "img/2_character_pepe/5_dead/D-56.png",
-    // "img/2_character_pepe/5_dead/D-57.png",
   ];
 
   RELAXING_PEPE = [
@@ -124,7 +123,6 @@ class Character extends MoveableObject {
       if (this.world.keyboard.RIGHT && this.x < this.world.level.end_x) {
         this.moveRight();
         this.otherDirection = false;
-        this.world.throwableObject.otherDirection = false;
         if (window.sound) {
           this.walkingNois();
         }
@@ -135,7 +133,6 @@ class Character extends MoveableObject {
       if (this.world.keyboard.LEFT && this.x > -599) {
         this.moveLeft();
         this.otherDirection = true;
-        this.world.throwableObject.otherDirection = true;
         if (window.sound) {
           this.walkingNois();
         }
