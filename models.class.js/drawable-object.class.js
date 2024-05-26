@@ -1,5 +1,5 @@
 class DrawableObject {
-  x = 100;
+  x = -300;
   y = 100;
   img = new Image(); //Storage for image
   imageChache = []; //Storage for images to animate the charcters

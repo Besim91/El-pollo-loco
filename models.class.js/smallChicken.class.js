@@ -11,6 +11,13 @@ class SmallChicken extends MoveableObject {
     "img/3_enemies_chicken/chicken_small/1_walk/3_w.png",
   ];
 
+  offset = {
+    top: 5,
+    bottom: 10,
+    left: 30,
+    right: 40,
+  };
+
   constructor() {
     super().loadImage("img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
     this.x = 200 + Math.random() * 799 * 5;

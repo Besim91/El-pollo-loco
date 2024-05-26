@@ -88,6 +88,13 @@ class Character extends MoveableObject {
   tiredSound = new Audio("audio/tired.mp3");
   sleepingSound = new Audio("audio/snoring.mp3");
 
+  offset = {
+    top: 120,
+    bottom: 10,
+    left: 15,
+    right: 25,
+  };
+
   constructor() {
     super().loadImage("img/2_character_pepe/1_idle/idle/I-1.png");
     this.y = 235;

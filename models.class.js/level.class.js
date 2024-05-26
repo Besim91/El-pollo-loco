@@ -2,7 +2,7 @@ class Level {
   background;
   enemies;
   clouds;
-  end_x = 4000;
+  end_x = 4300;
   coins;
   salsaBottleLeft;
   salsaBottleRight;

@@ -7,6 +7,7 @@ function initGame() {
 
   document.getElementById("canvas").classList.remove("d-none");
   document.getElementById("startScreen").classList.add("d-none");
+  document.getElementById("endScreen").classList.add("d-none");
 }
 
 function restartGame() {
@@ -15,6 +16,17 @@ function restartGame() {
     document.getElementById("endScreen").classList.add("d-none");
     document.getElementById("canvas").classList.remove("d-none");
   }
+}
+
+function openImpressum() {
+  document.getElementById("canvas").classList.add("d-none");
+  document.getElementById("startScreen").classList.add("d-none");
+  document.getElementById("impressum").classList.remove("d-none");
+}
+
+function closeImpressum() {
+  document.getElementById("startScreen").classList.remove("d-none");
+  document.getElementById("impressum").classList.add("d-none");
 }
 
 window.addEventListener("keydown", (e) => {

@@ -46,6 +46,14 @@ class Endboss extends MoveableObject {
 
   dinoSound = new Audio("audio/dinochicken.mp3");
   dinoWalk = new Audio("audio/dinowalk.mp3");
+  deadSound = new Audio("audio/rooster.mp3");
+
+  offset = {
+    top: 170,
+    bottom: 10,
+    left: 20,
+    right: 20,
+  };
 
   constructor() {
     super().loadImages(this.ENDBOSS);
@@ -68,10 +76,15 @@ class Endboss extends MoveableObject {
     setInterval(() => {
       if (this.energy == 0 && !this.endbossDead) {
         this.animate(this.DEAD_ENDBOSS);
-        this.endbossDead = true;
         if (window.sound) {
-          this.gameOver.play();
+          this.deadSound.play();
         }
+        this.endbossDead = true;
+        setTimeout(() => {
+          if (window.sound) {
+            this.gameOver.play();
+          }
+        }, 2000);
         document.getElementById("endScreen").style.display = "block";
       }
     }, 1000);

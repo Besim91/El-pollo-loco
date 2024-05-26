@@ -9,16 +9,25 @@ class MoveableObject extends DrawableObject {
   collectedCoins = 0;
   isInjured = false;
   enemyCrushed = false;
+  offsetX = 0;
+  offsetY = 0;
+
+  offset = {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  };
 
   gameOver = new Audio("audio/gameover.mp3");
 
   isColliding(obj) {
     return (
-      this.x + this.width >= obj.x &&
-      this.y + this.height >= obj.y &&
-      this.x <= obj.x + obj.width &&
-      this.y <= obj.y + obj.height
-    ); // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+      this.x + this.width - this.offset.right >= obj.x + obj.offset.left &&
+      this.y + this.height - this.offset.bottom >= obj.y + obj.offset.top &&
+      this.x + this.offset.left <= obj.x + obj.width - obj.offset.right &&
+      this.y + this.offset.top <= obj.y + obj.height - obj.offset.bottom
+    );
   }
 
   oneCycle(arr) {

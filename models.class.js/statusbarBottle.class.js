@@ -8,6 +8,8 @@ class StatusbarBottle extends DrawableObject {
     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
   ];
 
+
+
   constructor() {
     super().loadImages(this.STATUSBAR_BOTTLE);
     this.setPercentage(0);
