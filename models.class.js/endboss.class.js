@@ -80,6 +80,9 @@ class Endboss extends MoveableObject {
           this.deadSound.play();
         }
         this.endbossDead = true;
+        this.energy = 100;
+        document.getElementById("canvas").classList.add("d-none");
+        document.getElementById("endScreen").classList.remove("d-none");
         setTimeout(() => {
           if (window.sound) {
             this.gameOver.play();

@@ -141,14 +141,13 @@ class World {
     });
 
     this.throwableObject.forEach((bottle) => {
-      // Überprüfen, ob die Flasche den Boden erreicht hat (y-Koordinate = 220)------------------------------------------
       if (bottle.y >= 430) {
-        bottle.brokenFlag = true; // Flasche als zerbrochen markieren
+        bottle.brokenFlag = true;
         setTimeout(() => {
           let index = this.throwableObject.indexOf(bottle);
           this.throwableObject.splice(index, 1);
         }, 20);
-        bottle.splash(); // Simuliere das Brechen der Flasche
+        bottle.splash();
       }
     });
 
@@ -221,7 +220,6 @@ class World {
   drawElementOnMap(mo) {
     this.flipImage(mo);
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
     this.flipImageBack(mo);
   }
 
@@ -244,7 +242,6 @@ class World {
   }
 
   resetGame() {
-    // Stoppe die Intervalle
     clearInterval(this.gameInterval);
     cancelAnimationFrame(this.drawInterval);
 

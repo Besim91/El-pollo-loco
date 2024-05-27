@@ -190,6 +190,7 @@ class Character extends MoveableObject {
         if (window.sound) {
           this.deathNoise();
         }
+        this.energy = 100;
         document.getElementById("canvas").classList.add("d-none");
         document.getElementById("endScreen").classList.remove("d-none");
       }
