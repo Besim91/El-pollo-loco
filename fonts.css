@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "western";
+  src: url("fonts/western.woff2") format("woff2"),
+    url("fonts/western.woff") format("woff"),
+    url("fonts/western.otf") format("opentype"),
+    url("fonts/western.ttf") format("truetype");
+
+  font-family: "roundup";
+  src: url("fonts/roundup.woff2") format("woff2"),
+    url("fonts/roundup.woff") format("woff"),
+    url("fonts/roundup.otf") format("opentype"),
+    url("fonts/roundup.ttf") format("truetype");
+}

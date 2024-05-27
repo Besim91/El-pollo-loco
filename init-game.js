@@ -12,6 +12,7 @@ function initGame() {
 }
 
 function restartGame() {
+  initGame();
   if (this.world) {
     this.world.resetGame(); // Hier das Spiel zurücksetzen, wenn es bereits existiert
   }

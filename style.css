@@ -16,6 +16,7 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  font-family: "roundup";
 }
 
 .d-none {
@@ -28,7 +29,6 @@ body {
   justify-content: space-around;
   width: 810px;
   align-items: center;
-  font-family: cursive;
 }
 
 #gameMovement {
@@ -37,7 +37,6 @@ body {
   justify-content: space-around;
   width: 810px;
   align-items: center;
-  font-family: cursive;
 }
 
 .arrowRight {
