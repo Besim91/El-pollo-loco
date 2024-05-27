@@ -100,6 +100,16 @@ body {
   width: 60px;
   height: 60px;
 }
+#openScreenImg:hover {
+  cursor: pointer;
+  filter: brightness(0) saturate(100%) invert(29%) sepia(77%) saturate(7393%)
+    hue-rotate(350deg) brightness(104%) contrast(130%);
+}
+
+#openScreenImg {
+  width: 40px;
+  height: 40px;
+}
 
 .startEndImg {
   width: 800px;
