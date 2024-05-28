@@ -10,8 +10,8 @@ class World {
   statusbarCoin = new StatusbarCoin();
   statusbarEndboss = new StatusbarEndboss();
   throwableObject = [];
-  gameInterval;
-  drawInterval;
+  intervals = []; // Array to store interval references
+  animationFrames = []; // Array to store animation frame references
 
   bottleSound = new Audio("audio/bottle.mp3");
   coinSound = new Audio("audio/coin.mp3");
@@ -31,9 +31,11 @@ class World {
     this.drawGame();
     this.runGame();
 
-    setInterval(() => {
-      this.playBackgroundMusic();
-    }, 150);
+    this.intervals.push(
+      setInterval(() => {
+        this.playBackgroundMusic();
+      }, 150)
+    );
   }
 
   playBackgroundMusic() {
@@ -49,10 +51,12 @@ class World {
   }
 
   runGame() {
-    this.gameInterval = setInterval(() => {
-      this.checkCollisions();
-      this.checkThrowObjects();
-    }, 10);
+    this.intervals.push(
+      setInterval(() => {
+        this.checkCollisions();
+        this.checkThrowObjects();
+      }, 10)
+    );
   }
 
   checkThrowObjects() {
@@ -203,9 +207,10 @@ class World {
     this.ctx.translate(-this.cameraX, 0); //Moves the camera back
 
     //Call the draw function as often as the graphic card can handle it
-    this.drawInterval = requestAnimationFrame(() => {
+    let drawRef = requestAnimationFrame(() => {
       this.drawGame();
     });
+    this.animationFrames.push(drawRef);
     this.level.respawnEntities(this.character.x);
   }
 
@@ -242,8 +247,16 @@ class World {
   }
 
   resetGame() {
-    clearInterval(this.gameInterval);
-    cancelAnimationFrame(this.drawInterval);
+    // Clear all intervals
+    this.intervals.forEach(clearInterval);
+    this.intervals = [];
+
+    // Clear all animation frames
+    this.animationFrames.forEach(cancelAnimationFrame);
+    this.animationFrames = [];
+
+    // Clear character's intervals
+    this.character.clearIntervals();
 
     // Setze die Spielobjekte zurück
     this.character = new Character();

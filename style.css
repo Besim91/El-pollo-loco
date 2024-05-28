@@ -183,3 +183,79 @@ body {
   cursor: pointer;
   filter: drop-shadow(0px 0px 4px black);
 }
+
+#turnDevice {
+  width: 200px;
+  height: 200px;
+  display: none;
+}
+
+/* Responsive */
+
+@media only screen and (max-width: 800px) and (orientation: portrait) {
+  #canvas {
+    width: 100%;
+    display: none;
+  }
+
+  .startEndImg {
+    display: none;
+    width: 100%;
+  }
+
+  #gameMovement {
+    display: none;
+  }
+
+  #gameInfo {
+    display: none;
+  }
+
+  #startBtn {
+    display: none;
+  }
+
+  #turnDevice {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 800px) and (orientation: landscape) {
+  #canvas {
+    width: 100%;
+    display: none;
+  }
+
+  .startEndImg {
+    display: block;
+    width: 100%;
+  }
+
+  #turnDevice {
+    display: none;
+  }
+
+  #startBtn {
+    display: block;
+  }
+
+  #gameMovement {
+    display: none;
+  }
+
+  #gameInfo {
+    display: none;
+  }
+}
+
+@media only screen and (max-height: 600px) {
+  #canvas {
+    height: 100vh;
+    width: 100%;
+  }
+
+  .startEndImg {
+    height: 100vh;
+    width: 100%;
+  }
+}
