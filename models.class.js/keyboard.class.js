@@ -8,9 +8,20 @@ class KEYBOARD {
 
   constructor() {
     this.keyProcess();
+    this.detectTouchPress();
   }
 
   keyProcess() {
+    this.checkKeyDown();
+    this.checkKeyUp();
+  }
+
+  detectTouchPress() {
+    this.checkStart();
+    this.checkEnd();
+  }
+
+  checkKeyDown() {
     window.addEventListener("keydown", (e) => {
       if (e.keyCode == 37) {
         keyboard.LEFT = true;
@@ -31,7 +42,8 @@ class KEYBOARD {
         keyboard.D = true;
       }
     });
-
+  }
+  checkKeyUp() {
     window.addEventListener("keyup", (e) => {
       if (e.keyCode == 37) {
         keyboard.LEFT = false;
@@ -54,47 +66,37 @@ class KEYBOARD {
     });
   }
 
-  detectTouchPress() {
-    document.getElementById("arrowLeft").addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      this.LEFT = true;
+  checkStart() {
+    window.addEventListener("touchstart", (e) => {
+      if (e.target.id == "arrowRight") {
+        keyboard.RIGHT = true;
+      }
+      if (e.target.id == "arrowLeft") {
+        keyboard.LEFT = true;
+      }
+      if (e.target.id == "jump") {
+        keyboard.SPACE = true;
+      }
+      if (e.target.id == "throw") {
+        keyboard.D = true;
+      }
     });
+  }
 
-    document.getElementById("arrowLeft").addEventListener("touchend", (e) => {
-      e.preventDefault();
-      this.LEFT = false;
-    });
-
-    document
-      .getElementById("arrowRight")
-      .addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        this.RIGHT = true;
-      });
-
-    document.getElementById("arrowRight").addEventListener("touchend", (e) => {
-      e.preventDefault();
-      this.RIGHT = false;
-    });
-
-    document.getElementById("jump").addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      this.SPACE = true;
-    });
-
-    document.getElementById("jump").addEventListener("touchend", (e) => {
-      e.preventDefault();
-      this.SPACE = false;
-    });
-
-    document.getElementById("throw").addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      this.D = true;
-    });
-
-    document.getElementById("throw").addEventListener("touchend", (e) => {
-      e.preventDefault();
-      this.D = false;
+  checkEnd() {
+    window.addEventListener("touchend", (e) => {
+      if (e.target.id == "arrowRight") {
+        keyboard.RIGHT = false;
+      }
+      if (e.target.id == "arrowLeft") {
+        keyboard.LEFT = false;
+      }
+      if (e.target.id == "jump") {
+        keyboard.SPACE = false;
+      }
+      if (e.target.id == "throw") {
+        keyboard.D = false;
+      }
     });
   }
 }

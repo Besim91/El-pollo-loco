@@ -2,7 +2,6 @@ keyboard = new KEYBOARD();
 let world;
 
 function initGame() {
-  keyboard.detectTouchPress();
   let canvas = document.getElementById("canvas");
   initLevel();
   this.world = new World(canvas, keyboard);
