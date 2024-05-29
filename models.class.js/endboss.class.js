@@ -88,6 +88,8 @@ class Endboss extends MoveableObject {
         }, 2000);
         document.getElementById("canvas").classList.add("d-none");
         document.getElementById("endScreen").classList.remove("d-none");
+        document.getElementById("gameControls").classList.add("d-none");
+        document.getElementById("openScreenImg").classList.add("d-none");
       }
     }, 1000);
 

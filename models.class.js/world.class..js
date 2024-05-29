@@ -247,18 +247,7 @@ class World {
   }
 
   resetGame() {
-    // Clear all intervals
-    this.intervals.forEach(clearInterval);
-    this.intervals = [];
-
-    // Clear all animation frames
-    this.animationFrames.forEach(cancelAnimationFrame);
-    this.animationFrames = [];
-
-    // Clear character's intervals
-    this.character.clearIntervals();
-
-    // Setze die Spielobjekte zurück
+    // Reset game objects
     this.character = new Character();
     this.level = level1;
     this.cameraX = 0;
@@ -268,15 +257,16 @@ class World {
     this.statusbarEndboss = new StatusbarEndboss();
     this.throwableObject = [];
 
-    // Setze die Sounds zurück
+    // Reset sounds
     this.backgroundMusic.pause();
     this.backgroundAnimalSound.pause();
     this.backgroundMusic.currentTime = 0;
     this.backgroundAnimalSound.currentTime = 0;
 
-    // Initialisiere das Spiel neu
+    // Reinitialize the game
     this.setWorld();
     this.drawGame();
     this.runGame();
+
   }
 }

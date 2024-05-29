@@ -14,10 +14,13 @@ function initGame() {
 }
 
 function restartGame() {
-  initGame();
+  clearAllIntervalsAndFrames();
   if (this.world) {
-    this.world.resetGame(); // Hier das Spiel zurücksetzen, wenn es bereits existiert
+    this.world.resetGame();
   }
+  initLevel();
+  initGame();
+
   document.getElementById("endScreen").classList.add("d-none");
   document.getElementById("canvas").classList.remove("d-none");
 }
@@ -54,5 +57,13 @@ function openFullScreen() {
   } else if (elem.msRequestFullscreen) {
     /* IE11 */
     elem.msRequestFullscreen();
+  }
+}
+
+function clearAllIntervalsAndFrames() {
+  for (let i = 1; i < 9999; i++) {
+    window.clearInterval(i);
+    window.clearTimeout(i);
+    cancelAnimationFrame(i);
   }
 }
