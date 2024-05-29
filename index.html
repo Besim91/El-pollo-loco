@@ -35,35 +35,34 @@
 
 <body onload="includeHTML()">
 
-    <section id="gameInfo">
-        <img onclick="openImpressum()" id="i" src="img/12_symbols/die-info.png">
-        <img onclick="mute()" id="audioImg" src="img/11_audio/off-sound.svg">
-        <img onclick="openFullScreen()" class="d-none" id="openScreenImg" src="img/12_symbols/vollbild.png">
-    </section>
-
+    <div id="gameControls" class="d-none">
+        <img onclick="mute()" class="btnStyle btnHover" id="audioImg" src="img/11_audio/off-sound.svg">
+        <img onclick="openFullScreen()" class="btnStyle btnHover" id="openScreenImg" src="img/12_symbols/vollbild.png">
+        <img class="throw btnStyle btnTouchStyl d-none" id="throw" src="./img/12_symbols/flasche.png">
+        <img class="jump btnStyle btnTouchStyl d-none" id="jump" src="./img/12_symbols/springen.png">
+        <img class="arrowRight btnStyle btnTouchStyl d-none" src="./img/10_arrows/arrow.png">
+        <img class="arrowLeft btnStyle btnTouchStyl d-none" src="./img/10_arrows/arrow.png">
+    </div>
 
     <canvas id="canvas" class="d-none" width="800" height="600"></canvas>
 
     <div class="startEndScreen" id="startScreen">
-        <button onclick="initGame()" class="startEndBtn" id="startBtn">START</button>
+        <img onclick="initGame()" class="startEndBtn btnStyle btnHover" id="startBtn" src="./img/12_symbols/play.png" alt="">
+        <img onclick="openGameplayInfo()" id="gameplayInfo" class="btnStyle btnHover" src="img/12_symbols/die-info.png">
+        <img onclick="openImpressum()" id="i" class="btnStyle btnHover" src="img/12_symbols/vorhangeschloss.png">
         <img class="startEndImg" src="img/9_intro_outro_screens/start/startscreen_1.png">
     </div>
 
     <div class="startEndScreen d-none" id="endScreen">
-        <button onclick="restartGame()" class="startEndBtn" id="endBtn">RESTART</button>
+        <img onclick="restartGame()" id="endBtn" class="startEndBtn btnStyle btnHover" src="img/12_symbols/wiederholen.png">
         <img class="startEndImg" src="img/9_intro_outro_screens/game_over/game over.png">
     </div>
 
     <div w3-include-html="templates/impressum.html"></div>
+    <div w3-include-html="templates/gamplayInfo.html"></div>
 
-    <section id="gameMovement">
-        <button id="throw" class="throw">D</button>
-        <button id="jump" class="jump">SPACE</button>
-        <div id="arrows">
-            <img class="arrowRight" src="./img/10_arrows/arrow.png">
-            <img class="arrowLeft" src="./img/10_arrows/arrow.png">
-        </div>
-    </section>
+
+
 
     <img id="turnDevice" src="./img/12_symbols/drehen.png">
 

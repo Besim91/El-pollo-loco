@@ -193,6 +193,8 @@ class Character extends MoveableObject {
         this.energy = 100;
         document.getElementById("canvas").classList.add("d-none");
         document.getElementById("endScreen").classList.remove("d-none");
+        document.getElementById("gameControls").classList.add("d-none");
+        document.getElementById("openScreenImg").classList.add("d-none");
       }
 
       this.currentTime = new Date().getTime();

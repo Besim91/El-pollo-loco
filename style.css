@@ -3,6 +3,7 @@
   border: solid 5px;
   border-color: black;
   border-radius: 25px;
+  position: relative;
 }
 
 body {
@@ -19,95 +20,80 @@ body {
   font-family: "roundup";
 }
 
+#gameControls {
+  width: 800px;
+  height: 600px;
+  position: absolute;
+  background-color: transparent;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .d-none {
   display: none;
 }
 
-#gameInfo {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 810px;
-  align-items: center;
+.btnStyle {
+  position: absolute;
+  background-color: orangered;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: inset 0px 0px 6px black;
+  width: 32px;
+  height: 32px;
 }
 
-#gameMovement {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 810px;
-  align-items: center;
+.btnTouchStyl {
+  border-radius: 100%;
+  padding: 16px;
+}
+
+.btnHover:hover {
+  background-color: rgb(255, 92, 32);
+  cursor: pointer;
+}
+
+#audioImg {
+  left: 320px;
+  top: 25px;
+}
+
+.throw {
+  bottom: 25px;
+  left: 50%;
+}
+
+.jump {
+  bottom: 25px;
+  left: 25px;
 }
 
 .arrowRight {
   transform: rotate(180deg);
-  width: 100px;
-  height: 100px;
+  bottom: 25px;
+  right: 120px;
 }
 
 .arrowLeft {
-  width: 100px;
-  height: 100px;
+  bottom: 25px;
+  right: 25px;
 }
 
-.throw {
-  font-size: 40px;
-  font-weight: bold;
-}
-
-.jump {
-  font-size: 40px;
-  font-weight: bold;
+#gameplayInfo {
+  right: 120px;
+  top: 25px;
 }
 
 #i {
-  width: 50px;
-  height: 50px;
-}
-
-#i:hover {
-  cursor: pointer;
-  filter: brightness(0) saturate(100%) invert(29%) sepia(77%) saturate(7393%)
-    hue-rotate(350deg) brightness(104%) contrast(130%);
-}
-
-#startGameBtn {
-  cursor: pointer;
-  width: 500px;
-  height: 500px;
-  filter: contrast();
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.2;
-}
-
-#startGameBtn:hover {
-  filter: brightness(0) saturate(100%) invert(29%) sepia(77%) saturate(7393%)
-    hue-rotate(350deg) brightness(104%) contrast(130%);
-  opacity: 1;
-}
-
-#audioImg:hover {
-  cursor: pointer;
-  filter: brightness(0) saturate(100%) invert(29%) sepia(77%) saturate(7393%)
-    hue-rotate(350deg) brightness(104%) contrast(130%);
-}
-
-#audioImg {
-  width: 60px;
-  height: 60px;
-}
-#openScreenImg:hover {
-  cursor: pointer;
-  filter: brightness(0) saturate(100%) invert(29%) sepia(77%) saturate(7393%)
-    hue-rotate(350deg) brightness(104%) contrast(130%);
+  right: 25px;
+  top: 25px;
 }
 
 #openScreenImg {
-  width: 40px;
-  height: 40px;
+  right: 320px;
+  top: 25px;
 }
 
 .startEndImg {
@@ -122,27 +108,19 @@ body {
   position: relative;
 }
 
+#endScreen {
+  background-color: black;
+  border-radius: 25px;
+}
+
 .startEndBtn {
-  position: absolute;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 60px;
-  border-radius: 12px;
-  background-color: orangered;
-  color: white;
+  top: 25px;
+  left: 25px;
   font-weight: bold;
   font-size: 32px;
-  box-shadow: inset 0px 0px 6px black;
 }
 
-.startEndBtn:hover {
-  background-color: rgb(255, 92, 32);
-  cursor: pointer;
-}
-
-#impressum {
+.infodDiv {
   width: 800px;
   height: 600px;
   background-color: rgb(255, 92, 32);
@@ -155,6 +133,7 @@ body {
   scrollbar-width: none; /* Firefox */
   border: solid 5px;
   border-color: black;
+  font-size: 32px;
 }
 
 #impressum::-webkit-scrollbar {
@@ -198,25 +177,16 @@ body {
     display: none;
   }
 
-  .startEndImg {
-    display: none;
-    width: 100%;
-  }
-
-  #gameMovement {
-    display: none;
-  }
-
-  #gameInfo {
-    display: none;
-  }
-
-  #startBtn {
-    display: none;
-  }
-
   #turnDevice {
     display: block;
+  }
+
+  #audioImg {
+    display: none;
+  }
+
+  #openScreenImg {
+    display: none;
   }
 }
 
@@ -226,35 +196,34 @@ body {
     display: none;
   }
 
-  .startEndImg {
-    display: block;
-    width: 100%;
-  }
-
   #turnDevice {
     display: none;
   }
 
-  #startBtn {
-    display: block;
-  }
-
-  #gameMovement {
+  #audioImg {
     display: none;
   }
 
-  #gameInfo {
+  #openScreenImg {
     display: none;
+  }
+
+  #throw {
+    display: inline-block;
+  }
+  #jump {
+    display: inline-block;
+  }
+  .arrowRight {
+    display: inline-block;
+  }
+  .arrowLeft {
+    display: inline-block;
   }
 }
 
 @media only screen and (max-height: 600px) {
   #canvas {
-    height: 100vh;
-    width: 100%;
-  }
-
-  .startEndImg {
     height: 100vh;
     width: 100%;
   }
