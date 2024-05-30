@@ -27,7 +27,7 @@ class ThrowableObjects extends MoveableObject {
   constructor(x, y, world) {
     super().loadImages(this.THROWABLE_OBJECT);
     this.loadImages(this.BOTTLE_SPLASH);
-    this.world = world; // Übergebe die Referenz auf die Welt zuerst
+    this.world = world;
     this.playAnimation();
     this.throw(x, y);
   }
@@ -43,12 +43,8 @@ class ThrowableObjects extends MoveableObject {
     this.y = y;
     this.speedY = 20;
     this.graviation();
-
-    // Speichere die initiale Wurfrichtung basierend auf der aktuellen Laufrichtung des Charakters
     const throwDirection = this.world.character.otherDirection ? -1 : 1;
-
     setInterval(() => {
-      // Verwende die gespeicherte Wurfrichtung anstelle der aktuellen Laufrichtung des Charakters
       this.x += 10 * throwDirection;
     }, 1000 / 60);
   }
@@ -58,7 +54,6 @@ class ThrowableObjects extends MoveableObject {
       this.brokeBottle.play();
       this.brokeBottle.volume = 0.6;
     }
-
     this.currentImgIndex = 0;
     if (this.splashInterval) clearInterval(this.splashInterval);
     this.splashInterval = setInterval(() => {

@@ -1,7 +1,4 @@
 class Endboss extends MoveableObject {
-  width = 400;
-  height = 450;
-
   ENDBOSS = [
     "img/4_enemie_boss_chicken/2_alert/G5.png",
     "img/4_enemie_boss_chicken/2_alert/G6.png",
@@ -40,9 +37,12 @@ class Endboss extends MoveableObject {
     "img/4_enemie_boss_chicken/3_attack/G20.png",
   ];
 
+  width = 400;
+  height = 450;
   endbossDead = false;
   startEndbossRun = false;
   speed = 50;
+  endbossDied = false;
 
   dinoSound = new Audio("audio/dinochicken.mp3");
   dinoWalk = new Audio("audio/dinowalk.mp3");
@@ -67,50 +67,38 @@ class Endboss extends MoveableObject {
   }
 
   playAnimation() {
-    setInterval(() => {
-      if (!this.startEndbossRun) {
-        this.animate(this.ENDBOSS);
-      }
-    }, 100);
+    this.endbossRun();
+    this.checkEndbossHurt();
+    this.endbossReadyToAttack();
+    this.enbossWalk();
+    this.checkEnbossDeath();
+  }
 
+  checkEnbossDeath() {
     setInterval(() => {
-      if (this.energy == 0 && !this.endbossDead) {
+      if (!this.endbossDied && this.energy == 0 && !this.endbossDead) {
+        this.endbossDied = true;
         this.animate(this.DEAD_ENDBOSS);
         if (window.sound) {
           this.deadSound.play();
+          this.playGameOver();
+          mute();
         }
         this.endbossDead = true;
-
-        setTimeout(() => {
-          if (window.sound) {
-            this.gameOver.play();
-          }
-        }, 2000);
-        document.getElementById("canvas").classList.add("d-none");
-        document.getElementById("endScreen").classList.remove("d-none");
-        document.getElementById("gameControls").classList.add("d-none");
-        document.getElementById("openScreenImg").classList.add("d-none");
+        this.switchScreen();
       }
     }, 1000);
+  }
 
-    setInterval(() => {
-      if (this.isHurt() && !this.isInjured) {
-        this.animate(this.HURT_ENDBOSS);
-        this.startEndbossRun = true;
-        this.isInjured = true;
+  playGameOver() {
+    setTimeout(() => {
+      if (window.sound) {
+        this.gameOver.play();
       }
-    }, 1000 / 60);
+    }, 2000);
+  }
 
-    setInterval(() => {
-      if (this.energy < 100 && this.energy > 80) {
-        this.animate(this.ATTACK_ENDBOSS);
-        if (window.sound) {
-          this.dinoSound.play();
-          this.dinoSound.volume = 0.7;
-        }
-      }
-    }, 350);
-
+  enbossWalk() {
     setInterval(() => {
       if (this.startEndbossRun && this.energy > 0 && this.energy <= 80) {
         this.animate(this.WALK_ENDBOSS);
@@ -121,5 +109,44 @@ class Endboss extends MoveableObject {
         }
       }
     }, 300);
+  }
+
+  endbossReadyToAttack() {
+    setInterval(() => {
+      if (this.energy < 100 && this.energy > 80) {
+        this.animate(this.ATTACK_ENDBOSS);
+        if (window.sound) {
+          this.dinoSound.play();
+          this.dinoSound.volume = 0.7;
+        }
+      }
+    }, 350);
+  }
+
+  checkEndbossHurt() {
+    setInterval(() => {
+      if (this.isHurt() && !this.isInjured) {
+        this.animate(this.HURT_ENDBOSS);
+        this.startEndbossRun = true;
+        this.isInjured = true;
+      }
+    }, 1000 / 60);
+  }
+
+  endbossRun() {
+    setInterval(() => {
+      if (!this.startEndbossRun) {
+        this.animate(this.ENDBOSS);
+      }
+    }, 100);
+  }
+
+  switchScreen() {
+    setTimeout(() => {
+      document.getElementById("canvas").classList.add("d-none");
+      document.getElementById("endScreen").classList.remove("d-none");
+      document.getElementById("gameControls").classList.add("d-none");
+      document.getElementById("openScreenImg").classList.add("d-none");
+    }, 1500);
   }
 }

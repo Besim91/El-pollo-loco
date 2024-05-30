@@ -29,6 +29,22 @@ class SmallChicken extends MoveableObject {
   }
 
   playAnimation() {
+    let walkInterval = setInterval(() => {
+      if (this.energy > 0) {
+        this.animate(this.WALKING_SMALLCHICKEN);
+      }
+    }, 100);
+
+    let moveInterval = setInterval(() => {
+      if (this.energy > 0) {
+        this.moveLeft();
+      }
+    }, 1000 / 120);
+
+    this.checkDeath(walkInterval, moveInterval);
+  }
+
+  checkDeath(walkInterval, moveInterval) {
     let animationInterval = setInterval(() => {
       if (this.energy == 0) {
         if (window.sound) {
@@ -41,17 +57,5 @@ class SmallChicken extends MoveableObject {
         clearInterval(moveInterval);
       }
     }, 100);
-
-    let walkInterval = setInterval(() => {
-      if (this.energy > 0) {
-        this.animate(this.WALKING_SMALLCHICKEN);
-      }
-    }, 100);
-
-    let moveInterval = setInterval(() => {
-      if (this.energy > 0) {
-        this.moveLeft();
-      }
-    }, 1000 / 120);
   }
 }

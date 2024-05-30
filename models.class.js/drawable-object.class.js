@@ -1,13 +1,13 @@
 class DrawableObject {
   x = -300;
   y = 100;
-  img = new Image(); //Storage for image
-  imageChache = []; //Storage for images to animate the charcters
+  img = new Image();
+  imageChache = [];
   currentImage = 0;
   percentage;
 
   loadImage(path) {
-    this.img = new Image(); // Create an image
+    this.img = new Image();
     this.img.src = path;
   }
 

@@ -29,13 +29,13 @@ class Level {
         !(enemy instanceof Endboss) &&
         enemy.x + enemy.width < characterX - 1000
       ) {
-        enemy.x = characterX + 1000; // Beispiel: 200 Pixel vor dem Charakter
+        enemy.x = characterX + 1000;
       }
     });
 
     this.clouds.forEach((cloud) => {
       if (cloud.x + cloud.width < characterX - 1500) {
-        cloud.x = characterX + 1000; // Beispiel: 200 Pixel vor dem Charakter
+        cloud.x = characterX + 1000;
       }
     });
   }

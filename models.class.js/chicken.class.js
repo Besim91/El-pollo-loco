@@ -1,15 +1,14 @@
 class Chicken extends MoveableObject {
-  width = 100;
-  height = 90;
-  energy = 10;
-
-  deadSound = new Audio("audio/squeak.mp3");
-
   WALKING_CHICKEN = [
     "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
     "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
   ];
+
+  width = 100;
+  height = 90;
+  energy = 10;
+  deadSound = new Audio("audio/squeak.mp3");
 
   offset = {
     top: 5,
@@ -28,6 +27,22 @@ class Chicken extends MoveableObject {
   }
 
   playAnimation() {
+    let walkInterval = setInterval(() => {
+      if (this.energy > 0) {
+        this.animate(this.WALKING_CHICKEN);
+      }
+    }, 100);
+
+    let moveInterval = setInterval(() => {
+      if (this.energy > 0) {
+        this.moveLeft();
+      }
+    }, 1000 / 120);
+
+    this.checkDeath(walkInterval, moveInterval);
+  }
+
+  checkDeath(walkInterval, moveInterval) {
     let animationInterval = setInterval(() => {
       if (this.energy == 0) {
         if (window.sound) {
@@ -40,17 +55,5 @@ class Chicken extends MoveableObject {
         clearInterval(moveInterval);
       }
     }, 100);
-
-    let walkInterval = setInterval(() => {
-      if (this.energy > 0) {
-        this.animate(this.WALKING_CHICKEN);
-      }
-    }, 100);
-
-    let moveInterval = setInterval(() => {
-      if (this.energy > 0) {
-        this.moveLeft();
-      }
-    }, 1000 / 120);
   }
 }

@@ -120,97 +120,149 @@ class Character extends MoveableObject {
   playAnimation() {
     this.walkingSound.pause();
 
-    setInterval(() => {
-      if (this.world.keyboard.RIGHT && this.x < this.world.level.end_x) {
-        this.moveRight();
-        this.otherDirection = false;
-        if (window.sound) {
-          this.walkingNois();
-        }
-        this.safeLastKeyPress();
-        this.pepeRelaxed = false;
-        this.sleepingSound.pause();
-      }
-      if (this.world.keyboard.LEFT && this.x > -599) {
-        this.moveLeft();
-        this.otherDirection = true;
-        if (window.sound) {
-          this.walkingNois();
-        }
-        this.safeLastKeyPress();
-        this.pepeRelaxed = false;
-        this.sleepingSound.pause();
-      }
-      if (this.world.keyboard.SPACE && !this.isInAir()) {
-        // The second condition is to avoid jumping during to be in air
-        this.jump();
-        if (window.sound) {
-          this.jumpSound.play();
-        }
-        this.pepeRelaxed = false;
-        this.safeLastKeyPress();
-        this.sleepingSound.pause();
-      }
+    this.setupMovementIntervals();
+    this.setupHurtAnimationInterval();
+    this.setupRelaxAndSleepIntervals();
+    this.setupJumpAndWalkAnimationInterval();
+  }
 
-      this.world.cameraX = -this.x + 100; //Moves the camera to the opposite side of walking. +100 to place the camera a little bit forward
+  setupMovementIntervals() {
+    setInterval(() => {
+      this.handleRightMovement();
+      this.handleLeftMovement();
+      this.handleJump();
+      this.updateCamera();
     }, 1000 / 60);
+  }
 
-    setInterval(() => {
-      if (this.isHurt() && !this.isInjured) {
-        this.animate(this.HURT_PEPE);
-        if (window.sound) {
-          this.hurtNois();
-        }
-        this.sleepingSound.pause();
+  handleRightMovement() {
+    if (this.world.keyboard.RIGHT && this.x < this.world.level.end_x) {
+      this.moveRight();
+      this.otherDirection = false;
+      if (window.sound) {
+        this.walkingNois();
       }
+      this.safeLastKeyPress();
+      this.pepeRelaxed = false;
+      this.sleepingSound.pause();
+    }
+  }
+
+  handleLeftMovement() {
+    if (this.world.keyboard.LEFT && this.x > -599) {
+      this.moveLeft();
+      this.otherDirection = true;
+      if (window.sound) {
+        this.walkingNois();
+      }
+      this.safeLastKeyPress();
+      this.pepeRelaxed = false;
+      this.sleepingSound.pause();
+    }
+  }
+
+  handleJump() {
+    if (this.world.keyboard.SPACE && !this.isInAir()) {
+      this.jump();
+      if (window.sound) {
+        this.jumpSound.play();
+      }
+      this.pepeRelaxed = false;
+      this.safeLastKeyPress();
+      this.sleepingSound.pause();
+    }
+  }
+
+  updateCamera() {
+    this.world.cameraX = -this.x + 100;
+  }
+
+  setupHurtAnimationInterval() {
+    setInterval(() => {
+      this.handleHurtAnimation();
     }, 150);
+  }
 
+  handleHurtAnimation() {
+    if (this.isHurt() && !this.isInjured) {
+      this.animate(this.HURT_PEPE);
+      if (window.sound) {
+        this.hurtNois();
+      }
+      this.sleepingSound.pause();
+    }
+  }
+
+  setupRelaxAndSleepIntervals() {
     setInterval(() => {
-      if (
-        this.calculateTimeDiff() > 5 &&
-        this.calculateTimeDiff() < 8 &&
-        !this.pepeRelaxed
-      ) {
-        this.animate(this.RELAXING_PEPE);
-        if (window.sound) {
-          this.tiredSound.play();
-        }
-        this.pepeRelaxed = true;
-      }
-
-      if (this.calculateTimeDiff() > 7) {
-        this.animate(this.SLEEPING_PEPE);
-        if (window.sound) {
-          this.sleepingSound.play();
-        }
-        this.sleepingSound.volume = 0.3;
-      }
-
-      if (!this.pepeDied && this.isDead()) {
-        this.pepeDied = true;
-        this.oneCycle(this.DEATH_PEPE);
-        if (window.sound) {
-          this.deathNoise();
-        }
-        mute();
-        this.energy = 100;
-        document.getElementById("canvas").classList.add("d-none");
-        document.getElementById("endScreen").classList.remove("d-none");
-        document.getElementById("gameControls").classList.add("d-none");
-        document.getElementById("openScreenImg").classList.add("d-none");
-      }
-
-      this.currentTime = new Date().getTime();
-      this.calculateTimeDiff();
+      this.handleRelaxing();
+      this.handleSleeping();
+      this.handleDeath();
+      this.updateTime();
     }, 100);
+  }
 
-    setInterval(() => {
-      if (this.isInAir()) {
-        this.animateJump(this.JUMPING_PEPE);
-      } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-        this.animate(this.WALKING_PEPE);
+  handleRelaxing() {
+    if (
+      this.calculateTimeDiff() > 5 &&
+      this.calculateTimeDiff() < 8 &&
+      !this.pepeRelaxed
+    ) {
+      this.animate(this.RELAXING_PEPE);
+      if (window.sound) {
+        this.tiredSound.play();
       }
+      this.pepeRelaxed = true;
+    }
+  }
+
+  handleSleeping() {
+    if (this.calculateTimeDiff() > 7) {
+      this.animate(this.SLEEPING_PEPE);
+      if (window.sound) {
+        this.sleepingSound.play();
+      }
+      this.sleepingSound.volume = 0.3;
+    }
+  }
+
+  handleDeath() {
+    if (!this.pepeDied && this.isDead()) {
+      this.pepeDied = true;
+      this.oneCycle(this.DEATH_PEPE);
+      if (window.sound) {
+        this.deathNoise();
+        mute();
+      }
+      this.energy = 100;
+      this.switchScreen();
+    }
+  }
+
+  switchScreen() {
+    document.getElementById("canvas").classList.add("d-none");
+    document.getElementById("endScreen").classList.remove("d-none");
+    document.getElementById("gameControls").classList.add("d-none");
+    document.getElementById("openScreenImg").classList.add("d-none");
+  }
+
+  updateTime() {
+    this.currentTime = new Date().getTime();
+    this.calculateTimeDiff();
+  }
+
+  setupJumpAndWalkAnimationInterval() {
+    setInterval(() => {
+      this.handleJumpAndWalkAnimation();
     }, 30);
+  }
+
+  handleJumpAndWalkAnimation() {
+    if (this.isInAir()) {
+      this.animateJump(this.JUMPING_PEPE);
+    } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+      this.animate(this.WALKING_PEPE);
+    }
   }
 
   animateJump(arr) {
