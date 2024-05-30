@@ -32,7 +32,7 @@ body {
 }
 
 .d-none {
-  display: none;
+  display: none !important;
 }
 
 .btnStyle {
@@ -62,7 +62,7 @@ body {
 
 .throw {
   bottom: 25px;
-  left: 50%;
+  left: 120px;
 }
 
 .jump {
@@ -188,12 +188,26 @@ body {
   #openScreenImg {
     display: none;
   }
+
+  .startEndImg {
+    display: none;
+  }
+
+  #startBtn {
+    display: none;
+  }
+  #gameplayInfo {
+    display: none;
+  }
+  #i {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 800px) and (orientation: landscape) {
   #canvas {
     width: 100%;
-    display: none;
+    display: block;
   }
 
   #turnDevice {
@@ -209,16 +223,16 @@ body {
   }
 
   #throw {
-    display: inline-block;
+    display: inline-block !important;
   }
   #jump {
-    display: inline-block;
+    display: inline-block !important;
   }
   .arrowRight {
-    display: inline-block;
+    display: inline-block !important;
   }
   .arrowLeft {
-    display: inline-block;
+    display: inline-block !important;
   }
 }
 

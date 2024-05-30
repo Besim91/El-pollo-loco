@@ -79,6 +79,7 @@ class Character extends MoveableObject {
   lastMove = 0;
   pepeRelaxed = false;
   throwCooldown = false;
+  pepeDied = false;
 
   walkingSound = new Audio("audio/running.mp3");
   jumpSound = new Audio("audio/jump.mp3");
@@ -185,11 +186,13 @@ class Character extends MoveableObject {
         this.sleepingSound.volume = 0.3;
       }
 
-      if (this.isDead()) {
+      if (!this.pepeDied && this.isDead()) {
+        this.pepeDied = true;
         this.oneCycle(this.DEATH_PEPE);
         if (window.sound) {
           this.deathNoise();
         }
+        mute();
         this.energy = 100;
         document.getElementById("canvas").classList.add("d-none");
         document.getElementById("endScreen").classList.remove("d-none");
@@ -289,9 +292,5 @@ class Character extends MoveableObject {
       this.deathSound.pause();
       this.gameOver.play();
     }, 1000);
-
-    setTimeout(() => {
-      this.gameOver.pause();
-    }, 2000);
   }
 }
