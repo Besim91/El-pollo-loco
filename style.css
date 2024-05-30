@@ -13,11 +13,27 @@ body {
   flex-direction: column;
   height: 100vh;
   margin: 0;
-  background-image: url(./img/9_intro_outro_screens/desert.png);
+  background-image: url(./img/9_intro_outro_screens/desert.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   font-family: "roundup";
+}
+
+#headline {
+  font-size: 80px;
+  text-align: center;
+  text-shadow: 2px 2px 10px brown;
+  top: 5%;
+  position: absolute;
+}
+
+#headlineBottom {
+  font-size: 80px;
+  text-align: center;
+  text-shadow: 2px 2px 10px brown;
+  bottom: 5%;
+  position: absolute;
 }
 
 #gameControls {
@@ -167,6 +183,16 @@ body {
   width: 200px;
   height: 200px;
   display: none;
+  animation: rotate 40s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Responsive */
@@ -202,12 +228,19 @@ body {
   #i {
     display: none;
   }
+  #headline {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 800px) and (orientation: landscape) {
   #canvas {
     width: 100%;
     display: block;
+  }
+
+  #headline {
+    display: none;
   }
 
   #turnDevice {

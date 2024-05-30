@@ -267,6 +267,5 @@ class World {
     this.setWorld();
     this.drawGame();
     this.runGame();
-
   }
 }
