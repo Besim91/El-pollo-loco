@@ -1,5 +1,8 @@
 let level1;
 
+/**
+ * Initializes the opponents
+ */
 function initLevel() {
   level1 = new Level(
     [

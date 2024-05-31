@@ -1,8 +1,15 @@
+/**
+ * Class representing a large cloud that moves across the screen.
+ * @extends MoveableObject
+ */
 class CloudsOne extends MoveableObject {
   width = 600;
   height = 250;
-  speed = 1/10;
+  speed = 1 / 10;
 
+  /**
+   * Create a new large cloud instance.
+   */
   constructor() {
     super().loadImage("img/5_background/layers/4_clouds/1.png");
     this.x = Math.random() * 799 * 5;

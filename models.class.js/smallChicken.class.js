@@ -1,16 +1,23 @@
+/**
+ * Represents a small chicken enemy in the game.
+ * Extends the MoveableObject class.
+ */
 class SmallChicken extends MoveableObject {
-  width = 60;
-  height = 60;
-  energy = 10;
-
-  deadSound = new Audio("audio/squeak.mp3");
-
   WALKING_SMALLCHICKEN = [
     "img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
     "img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
     "img/3_enemies_chicken/chicken_small/1_walk/3_w.png",
   ];
 
+  width = 60;
+  height = 60;
+  energy = 10;
+  deadSound = new Audio("audio/squeak.mp3");
+
+  /**
+   * Offset values for collision detection.
+   * @type {{ top: number, bottom: number, left: number, right: number }}
+   */
   offset = {
     top: 5,
     bottom: 10,
@@ -18,6 +25,10 @@ class SmallChicken extends MoveableObject {
     right: 40,
   };
 
+  /**
+   * Creates an instance of SmallChicken.
+   * Sets initial properties, loads images, and starts animations.
+   */
   constructor() {
     super().loadImage("img/3_enemies_chicken/chicken_small/1_walk/1_w.png");
     this.x = 200 + Math.random() * 799 * 5;
@@ -28,6 +39,10 @@ class SmallChicken extends MoveableObject {
     this.moveLeft();
   }
 
+  /**
+   * Plays the walking animation of the small chicken and continuously moves it left.
+   * Checks for death and stops animations if energy is depleted.
+   */
   playAnimation() {
     let walkInterval = setInterval(() => {
       if (this.energy > 0) {
@@ -44,6 +59,11 @@ class SmallChicken extends MoveableObject {
     this.checkDeath(walkInterval, moveInterval);
   }
 
+  /**
+   * Checks if the small chicken has died, stops animations and moves if it has.
+   * @param {number} walkInterval - The interval ID for walking animation.
+   * @param {number} moveInterval - The interval ID for continuous movement.
+   */
   checkDeath(walkInterval, moveInterval) {
     let animationInterval = setInterval(() => {
       if (this.energy == 0) {

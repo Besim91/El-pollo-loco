@@ -1,101 +1,126 @@
+/**
+ * Class to manage keyboard inputs and touch events.
+ */
 class KEYBOARD {
-  RIGHT = false;
-  LEFT = false;
-  UP = false;
-  DOWN = false;
-  SPACE = false;
-  D = false;
-
+  /**
+   * Creates an instance of the KEYBOARD class and initializes keyboard and touch event monitoring.
+   */
   constructor() {
+    this.RIGHT = false;
+    this.LEFT = false;
+    this.UP = false;
+    this.DOWN = false;
+    this.SPACE = false;
+    this.D = false;
+
     this.keyProcess();
     this.detectTouchPress();
   }
 
+  /**
+   * Checks keyboard inputs.
+   */
   keyProcess() {
     this.checkKeyDown();
     this.checkKeyUp();
   }
 
+  /**
+   * Checks if keys are being pressed.
+   */
   detectTouchPress() {
     this.checkStart();
     this.checkEnd();
   }
 
+  /**
+   * Checks key press events.
+   */
   checkKeyDown() {
     window.addEventListener("keydown", (e) => {
       if (e.keyCode == 37) {
-        keyboard.LEFT = true;
+        this.LEFT = true;
       }
       if (e.keyCode == 38) {
-        keyboard.UP = true;
+        this.UP = true;
       }
       if (e.keyCode == 39) {
-        keyboard.RIGHT = true;
+        this.RIGHT = true;
       }
       if (e.keyCode == 40) {
-        keyboard.DOWN = true;
+        this.DOWN = true;
       }
       if (e.keyCode == 32) {
-        keyboard.SPACE = true;
+        this.SPACE = true;
       }
       if (e.keyCode == 68) {
-        keyboard.D = true;
+        this.D = true;
       }
     });
   }
+
+  /**
+   * Checks key release events.
+   */
   checkKeyUp() {
     window.addEventListener("keyup", (e) => {
       if (e.keyCode == 37) {
-        keyboard.LEFT = false;
+        this.LEFT = false;
       }
       if (e.keyCode == 38) {
-        keyboard.UP = false;
+        this.UP = false;
       }
       if (e.keyCode == 39) {
-        keyboard.RIGHT = false;
+        this.RIGHT = false;
       }
       if (e.keyCode == 40) {
-        keyboard.DOWN = false;
+        this.DOWN = false;
       }
       if (e.keyCode == 32) {
-        keyboard.SPACE = false;
+        this.SPACE = false;
       }
       if (e.keyCode == 68) {
-        keyboard.D = false;
+        this.D = false;
       }
     });
   }
 
+  /**
+   * Checks the start of touch events.
+   */
   checkStart() {
     window.addEventListener("touchstart", (e) => {
       if (e.target.id == "arrowRight") {
-        keyboard.RIGHT = true;
+        this.RIGHT = true;
       }
       if (e.target.id == "arrowLeft") {
-        keyboard.LEFT = true;
+        this.LEFT = true;
       }
       if (e.target.id == "jump") {
-        keyboard.SPACE = true;
+        this.SPACE = true;
       }
       if (e.target.id == "throw") {
-        keyboard.D = true;
+        this.D = true;
       }
     });
   }
 
+  /**
+   * Checks the end of touch events.
+   */
   checkEnd() {
     window.addEventListener("touchend", (e) => {
       if (e.target.id == "arrowRight") {
-        keyboard.RIGHT = false;
+        this.RIGHT = false;
       }
       if (e.target.id == "arrowLeft") {
-        keyboard.LEFT = false;
+        this.LEFT = false;
       }
       if (e.target.id == "jump") {
-        keyboard.SPACE = false;
+        this.SPACE = false;
       }
       if (e.target.id == "throw") {
-        keyboard.D = false;
+        this.D = false;
       }
     });
   }

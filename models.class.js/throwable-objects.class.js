@@ -1,3 +1,7 @@
+/**
+ * Represents a throwable object in the game, such as a salsa bottle.
+ * Extends the MoveableObject class.
+ */
 class ThrowableObjects extends MoveableObject {
   THROWABLE_OBJECT = [
     "img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
@@ -5,6 +9,7 @@ class ThrowableObjects extends MoveableObject {
     "img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png",
     "img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png",
   ];
+
   BOTTLE_SPLASH = [
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png",
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png",
@@ -21,9 +26,14 @@ class ThrowableObjects extends MoveableObject {
   currentImgIndex = 0;
   brokenFlag = false;
   splashInterval = null;
-
   brokeBottle = new Audio("audio/brokenbottle.mp3");
 
+  /**
+   * Creates an instance of ThrowableObjects.
+   * @param {number} x - The initial x-coordinate of the throwable object.
+   * @param {number} y - The initial y-coordinate of the throwable object.
+   * @param {World} world - The game world reference.
+   */
   constructor(x, y, world) {
     super().loadImages(this.THROWABLE_OBJECT);
     this.loadImages(this.BOTTLE_SPLASH);
@@ -32,12 +42,20 @@ class ThrowableObjects extends MoveableObject {
     this.throw(x, y);
   }
 
+  /**
+   * Plays the rotation animation of the throwable object.
+   */
   playAnimation() {
     setInterval(() => {
       this.animate(this.THROWABLE_OBJECT);
     }, 1000 / 25);
   }
 
+  /**
+   * Throws the throwable object.
+   * @param {number} x - The x-coordinate to throw the object from.
+   * @param {number} y - The y-coordinate to throw the object from.
+   */
   throw(x, y) {
     this.x = x;
     this.y = y;
@@ -49,6 +67,9 @@ class ThrowableObjects extends MoveableObject {
     }, 1000 / 60);
   }
 
+  /**
+   * Plays the splash animation when the object hits the ground.
+   */
   splash() {
     if (window.sound) {
       this.brokeBottle.play();

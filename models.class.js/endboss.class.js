@@ -1,3 +1,8 @@
+/**
+ * Represents an end boss in the game, extending MoveableObject.
+ * @extends MoveableObject
+ */
+
 class Endboss extends MoveableObject {
   ENDBOSS = [
     "img/4_enemie_boss_chicken/2_alert/G5.png",
@@ -55,6 +60,10 @@ class Endboss extends MoveableObject {
     right: 20,
   };
 
+  /**
+   * Represents a constructor function for managing end boss animations and game logic.
+   * @constructor
+   */
   constructor() {
     super().loadImages(this.ENDBOSS);
     this.loadImages(this.DEAD_ENDBOSS);
@@ -66,6 +75,9 @@ class Endboss extends MoveableObject {
     this.x = 4300;
   }
 
+  /**
+   * Initiates various animations for the end boss.
+   */
   playAnimation() {
     this.endbossRun();
     this.checkEndbossHurt();
@@ -74,9 +86,12 @@ class Endboss extends MoveableObject {
     this.checkEnbossDeath();
   }
 
+  /**
+   * Checks if the end boss has died and triggers game over logic.
+   */
   checkEnbossDeath() {
     setInterval(() => {
-      if (!this.endbossDied && this.energy == 0 && !this.endbossDead) {
+      if (this.dead()) {
         this.endbossDied = true;
         this.animate(this.DEAD_ENDBOSS);
         if (window.sound) {
@@ -90,6 +105,13 @@ class Endboss extends MoveableObject {
     }, 1000);
   }
 
+  dead() {
+    return !this.endbossDied && this.energy == 0 && !this.endbossDead;
+  }
+
+  /**
+   * Initiates the game over sound effect.
+   */
   playGameOver() {
     setTimeout(() => {
       if (window.sound) {
@@ -98,9 +120,12 @@ class Endboss extends MoveableObject {
     }, 2000);
   }
 
+  /**
+   * Initiates the end boss walking animation.
+   */
   enbossWalk() {
     setInterval(() => {
-      if (this.startEndbossRun && this.energy > 0 && this.energy <= 80) {
+      if (this.canAttack()) {
         this.animate(this.WALK_ENDBOSS);
         this.moveLeft();
         if (window.sound) {
@@ -111,9 +136,16 @@ class Endboss extends MoveableObject {
     }, 300);
   }
 
+  canAttack() {
+    return this.startEndbossRun && this.energy > 0 && this.energy <= 80;
+  }
+
+  /**
+   * Initiates the end boss attack animation.
+   */
   endbossReadyToAttack() {
     setInterval(() => {
-      if (this.energy < 100 && this.energy > 80) {
+      if (this.canPrepareAttack()) {
         this.animate(this.ATTACK_ENDBOSS);
         if (window.sound) {
           this.dinoSound.play();
@@ -123,6 +155,13 @@ class Endboss extends MoveableObject {
     }, 350);
   }
 
+  canPrepareAttack() {
+    return this.energy < 100 && this.energy > 80;
+  }
+
+  /**
+   * Checks if the end boss is hurt and triggers corresponding animations.
+   */
   checkEndbossHurt() {
     setInterval(() => {
       if (this.isHurt() && !this.isInjured) {
@@ -133,6 +172,9 @@ class Endboss extends MoveableObject {
     }, 1000 / 60);
   }
 
+  /**
+   * Initiates the default end boss running animation.
+   */
   endbossRun() {
     setInterval(() => {
       if (!this.startEndbossRun) {
@@ -141,6 +183,9 @@ class Endboss extends MoveableObject {
     }, 100);
   }
 
+  /**
+   * Switches the game screen to the end screen after a delay.
+   */
   switchScreen() {
     setTimeout(() => {
       document.getElementById("canvas").classList.add("d-none");

@@ -1,3 +1,7 @@
+/**
+ * Represents a chicken enemy in the game.
+ * @extends MoveableObject
+ */
 class Chicken extends MoveableObject {
   WALKING_CHICKEN = [
     "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
@@ -8,8 +12,21 @@ class Chicken extends MoveableObject {
   width = 100;
   height = 90;
   energy = 10;
+
+  /**
+   * Sound that plays when the chicken dies.
+   * @type {Audio}
+   */
   deadSound = new Audio("audio/squeak.mp3");
 
+  /**
+   * Offset values for collision detection.
+   * @type {Object}
+   * @property {number} top - Offset from the top.
+   * @property {number} bottom - Offset from the bottom.
+   * @property {number} left - Offset from the left.
+   * @property {number} right - Offset from the right.
+   */
   offset = {
     top: 5,
     bottom: 10,
@@ -17,6 +34,9 @@ class Chicken extends MoveableObject {
     right: 10,
   };
 
+  /**
+   * Creates an instance of Chicken.
+   */
   constructor() {
     super().loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
     this.x = 200 + Math.random() * 799 * 5;
@@ -26,6 +46,9 @@ class Chicken extends MoveableObject {
     this.playAnimation();
   }
 
+  /**
+   * Plays the walking animation and moves the chicken left.
+   */
   playAnimation() {
     let walkInterval = setInterval(() => {
       if (this.energy > 0) {
@@ -42,6 +65,11 @@ class Chicken extends MoveableObject {
     this.checkDeath(walkInterval, moveInterval);
   }
 
+  /**
+   * Checks if the chicken's energy is zero and handles the death animation and sound.
+   * @param {number} walkInterval - ID of the walking animation interval.
+   * @param {number} moveInterval - ID of the movement interval.
+   */
   checkDeath(walkInterval, moveInterval) {
     let animationInterval = setInterval(() => {
       if (this.energy == 0) {
