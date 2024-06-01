@@ -1,7 +1,3 @@
-/**
- * Represents the game world and its functionalities including drawing, collision detection,
- * sound management, and game state management.
- */
 class World {
   ctx;
   character = new Character();

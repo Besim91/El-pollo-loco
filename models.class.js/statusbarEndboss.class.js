@@ -1,23 +1,10 @@
-/**
- * Represents a status bar for an end boss in the game.
- * Extends the DrawableObject class.
- */
 class StatusbarEndboss extends DrawableObject {
-  STATUSBAR_ENDBOSS = [
-    "img/7_statusbars/2_statusbar_endboss/blue/blue0.png",
-    "img/7_statusbars/2_statusbar_endboss/blue/blue20.png",
-    "img/7_statusbars/2_statusbar_endboss/blue/blue40.png",
-    "img/7_statusbars/2_statusbar_endboss/blue/blue60.png",
-    "img/7_statusbars/2_statusbar_endboss/blue/blue80.png",
-    "img/7_statusbars/2_statusbar_endboss/blue/blue100.png",
-  ];
-
   /**
    * Creates an instance of StatusbarEndboss.
    * Sets initial properties and loads images.
    */
   constructor() {
-    super().loadImages(this.STATUSBAR_ENDBOSS);
+    super().loadImages(STATUSBAR_ENDBOSS);
     this.setPercentage(100);
     this.y = 10;
     this.x = 590;
@@ -31,7 +18,7 @@ class StatusbarEndboss extends DrawableObject {
    */
   setPercentage(percentage) {
     this.percentage = percentage;
-    let path = this.STATUSBAR_ENDBOSS[this.resolvePercentageIndex()];
+    let path = STATUSBAR_ENDBOSS[this.resolvePercentageIndex()];
     this.img = this.imageChache[path];
   }
 

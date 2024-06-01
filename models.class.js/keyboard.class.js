@@ -1,6 +1,3 @@
-/**
- * Class to manage keyboard inputs and touch events.
- */
 class KEYBOARD {
   /**
    * Creates an instance of the KEYBOARD class and initializes keyboard and touch event monitoring.

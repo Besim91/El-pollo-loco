@@ -1,42 +1,33 @@
-/**
- * Class representing a movable object.
- * @extends DrawableObject
- */
 class MoveableObject extends DrawableObject {
+  energy = 100;
+  lastHit = 0;
+  acceleration = 4;
+  speedY = 0;
+  collectedBottles = 0;
+  throwablebottles = 0;
+  collectedCoins = 0;
+  isInjured = false;
+  enemyCrushed = false;
+  offsetX = 0;
+  offsetY = 0;
+  lastMove;
+
   /**
-   * Creates an instance of the MoveableObject class.
+   * Offset values for collision detection.
+   * @type {{top: number, bottom: number, left: number, right: number}}
    */
-  constructor() {
-    super();
-    this.energy = 100;
-    this.lastHit = 0;
-    this.acceleration = 4;
-    this.speedY = 0;
-    this.collectedBottles = 0;
-    this.throwablebottles = 0;
-    this.collectedCoins = 0;
-    this.isInjured = false;
-    this.enemyCrushed = false;
-    this.offsetX = 0;
-    this.offsetY = 0;
+  offset = {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  };
 
-    /**
-     * Offset values for collision detection.
-     * @type {{top: number, bottom: number, left: number, right: number}}
-     */
-    this.offset = {
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-    };
-
-    /**
-     * Audio element for the end of the game.
-     * @type {HTMLAudioElement}
-     */
-    this.gameOver = new Audio("audio/gameover.mp3");
-  }
+  /**
+   * Audio element for the end of the game.
+   * @type {HTMLAudioElement}
+   */
+  gameOver = new Audio("audio/gameover.mp3");
 
   /**
    * Checks if the object collides with another object.
@@ -162,5 +153,29 @@ class MoveableObject extends DrawableObject {
     if (this.energy < 0) {
       this.energy = 0;
     }
+  }
+
+  /**
+   * Calculates the time difference between the current time and the last recorded move time.
+   * @returns {number} The time difference in seconds.
+   */
+  calculateTimeDiff() {
+    let timeDiff = this.currentTime - this.lastMove;
+    return timeDiff / 1000;
+  }
+
+  /**
+   * Records the current time as the last key press time.
+   */
+  safeLastKeyPress() {
+    this.lastMove = new Date().getTime();
+  }
+
+  /**
+   * Plays the walking sound if the character is not in the air.
+   */
+  playAudioOf(x) {
+    x.volume = 0.5;
+    x.play();
   }
 }

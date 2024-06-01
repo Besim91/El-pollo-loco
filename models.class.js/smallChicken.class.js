@@ -1,14 +1,4 @@
-/**
- * Represents a small chicken enemy in the game.
- * Extends the MoveableObject class.
- */
 class SmallChicken extends MoveableObject {
-  WALKING_SMALLCHICKEN = [
-    "img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
-    "img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
-    "img/3_enemies_chicken/chicken_small/1_walk/3_w.png",
-  ];
-
   width = 60;
   height = 60;
   energy = 10;
@@ -34,7 +24,7 @@ class SmallChicken extends MoveableObject {
     this.x = 200 + Math.random() * 799 * 5;
     this.y = 470;
     this.speed = 0.05 + Math.random() * 0.25;
-    this.loadImages(this.WALKING_SMALLCHICKEN);
+    this.loadImages(WALKING_SMALLCHICKEN);
     this.playAnimation();
     this.moveLeft();
   }
@@ -46,7 +36,7 @@ class SmallChicken extends MoveableObject {
   playAnimation() {
     let walkInterval = setInterval(() => {
       if (this.energy > 0) {
-        this.animate(this.WALKING_SMALLCHICKEN);
+        this.animate(WALKING_SMALLCHICKEN);
       }
     }, 100);
 

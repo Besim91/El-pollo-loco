@@ -1,24 +1,4 @@
-/**
- * Represents a throwable object in the game, such as a salsa bottle.
- * Extends the MoveableObject class.
- */
 class ThrowableObjects extends MoveableObject {
-  THROWABLE_OBJECT = [
-    "img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
-    "img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png",
-    "img/6_salsa_bottle/bottle_rotation/3_bottle_rotation.png",
-    "img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png",
-  ];
-
-  BOTTLE_SPLASH = [
-    "img/6_salsa_bottle/bottle_rotation/bottle_splash/1_bottle_splash.png",
-    "img/6_salsa_bottle/bottle_rotation/bottle_splash/2_bottle_splash.png",
-    "img/6_salsa_bottle/bottle_rotation/bottle_splash/3_bottle_splash.png",
-    "img/6_salsa_bottle/bottle_rotation/bottle_splash/4_bottle_splash.png",
-    "img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
-    "img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
-  ];
-
   width = 100;
   height = 100;
   world;
@@ -35,8 +15,8 @@ class ThrowableObjects extends MoveableObject {
    * @param {World} world - The game world reference.
    */
   constructor(x, y, world) {
-    super().loadImages(this.THROWABLE_OBJECT);
-    this.loadImages(this.BOTTLE_SPLASH);
+    super().loadImages(THROWABLE_OBJECT);
+    this.loadImages(BOTTLE_SPLASH);
     this.world = world;
     this.playAnimation();
     this.throw(x, y);
@@ -47,7 +27,7 @@ class ThrowableObjects extends MoveableObject {
    */
   playAnimation() {
     setInterval(() => {
-      this.animate(this.THROWABLE_OBJECT);
+      this.animate(THROWABLE_OBJECT);
     }, 1000 / 25);
   }
 
@@ -78,8 +58,8 @@ class ThrowableObjects extends MoveableObject {
     this.currentImgIndex = 0;
     if (this.splashInterval) clearInterval(this.splashInterval);
     this.splashInterval = setInterval(() => {
-      this.animate(this.BOTTLE_SPLASH);
-      if (this.currentImgIndex >= this.BOTTLE_SPLASH.length) {
+      this.animate(BOTTLE_SPLASH);
+      if (this.currentImgIndex >= BOTTLE_SPLASH.length) {
         clearInterval(this.splashInterval);
         this.splashInterval = null;
       }

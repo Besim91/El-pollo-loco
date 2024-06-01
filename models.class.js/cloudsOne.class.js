@@ -1,7 +1,3 @@
-/**
- * Class representing a large cloud that moves across the screen.
- * @extends MoveableObject
- */
 class CloudsOne extends MoveableObject {
   width = 600;
   height = 250;

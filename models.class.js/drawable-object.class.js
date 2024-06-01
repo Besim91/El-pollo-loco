@@ -1,6 +1,3 @@
-/**
- * Class representing a drawable object.
- */
 class DrawableObject {
   x = -300;
   y = 100;

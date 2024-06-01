@@ -6,6 +6,12 @@
   position: relative;
 }
 
+#canvasFrame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 body {
   display: flex;
   align-items: center;
@@ -231,6 +237,10 @@ body {
   #headline {
     display: none;
   }
+
+  #headlineBottom {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 800px) and (orientation: landscape) {
@@ -240,6 +250,10 @@ body {
   }
 
   #headline {
+    display: none;
+  }
+
+  #headlineBottom {
     display: none;
   }
 

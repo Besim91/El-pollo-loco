@@ -23,7 +23,7 @@ function initGame() {
  * implementations of the full screen request.
  */
 function openFullScreen() {
-  var elem = document.getElementById("canvas");
+  var elem = document.getElementById("canvasFrame");
 
   if (elem.requestFullscreen) {
     elem.requestFullscreen();

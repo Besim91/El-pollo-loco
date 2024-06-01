@@ -1,6 +1,3 @@
-/**
- * Class representing a level in the game.
- */
 class Level {
   /**
    * Creates an instance of the Level class.

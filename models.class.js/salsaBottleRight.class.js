@@ -1,7 +1,3 @@
-/**
- * Represents a salsa bottle object on the right side of the ground in the game.
- * Extends the MoveableObject class.
- */
 class salsaBottleRight extends MoveableObject {
   width = 100;
   height = 100;

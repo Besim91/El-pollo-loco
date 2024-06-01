@@ -1,23 +1,10 @@
-/**
- * Represents a status bar for collected coins in the game.
- * Extends the DrawableObject class.
- */
 class StatusbarCoin extends DrawableObject {
-  STATUSBAR_COIN = [
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/20.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/40.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/60.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/80.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/orange/100.png",
-  ];
-
   /**
    * Creates an instance of StatusbarCoin.
    * Sets initial properties and loads images.
    */
   constructor() {
-    super().loadImages(this.STATUSBAR_COIN);
+    super().loadImages(STATUSBAR_COIN);
     this.setPercentage(0);
     this.y = 60;
     this.x = 10;
@@ -31,7 +18,7 @@ class StatusbarCoin extends DrawableObject {
    */
   setPercentage(collectedCoins) {
     this.collectedCoins = collectedCoins;
-    let path = this.STATUSBAR_COIN[this.resolvePercentageIndex()];
+    let path = STATUSBAR_COIN[this.resolvePercentageIndex()];
     this.img = this.imageChache[path];
   }
 

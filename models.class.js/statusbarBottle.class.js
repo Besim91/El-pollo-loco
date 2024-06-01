@@ -1,23 +1,10 @@
-/**
- * Represents a status bar for collected bottles in the game.
- * Extends the DrawableObject class.
- */
 class StatusbarBottle extends DrawableObject {
-  STATUSBAR_BOTTLE = [
-    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",
-    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
-    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png",
-    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png",
-    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png",
-    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
-  ];
-
   /**
    * Creates an instance of StatusbarBottle.
    * Sets initial properties and loads images.
    */
   constructor() {
-    super().loadImages(this.STATUSBAR_BOTTLE);
+    super().loadImages(STATUSBAR_BOTTLE);
     this.setPercentage(0);
     this.y = 110;
     this.x = 10;
@@ -31,7 +18,7 @@ class StatusbarBottle extends DrawableObject {
    */
   setPercentage(collectedBottles) {
     this.collectedBottles = collectedBottles;
-    let path = this.STATUSBAR_BOTTLE[this.resolvePercentageIndex()];
+    let path = STATUSBAR_BOTTLE[this.resolvePercentageIndex()];
     this.img = this.imageChache[path];
   }
 

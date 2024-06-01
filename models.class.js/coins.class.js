@@ -1,15 +1,7 @@
-/**
- * Class representing a coin that can move and animate.
- * @extends MoveableObject
- */
 class Coin extends MoveableObject {
   width = 120;
   height = 120;
 
-  /**
-   * The image paths for the coin animation.
-   * @type {string[]}
-   */
   COINS = ["img/8_coin/coin_1.png", "img/8_coin/coin_2.png"];
 
   /**

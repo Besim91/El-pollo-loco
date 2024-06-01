@@ -1,22 +1,8 @@
-/**
- * Represents a chicken enemy in the game.
- * @extends MoveableObject
- */
 class Chicken extends MoveableObject {
-  WALKING_CHICKEN = [
-    "img/3_enemies_chicken/chicken_normal/1_walk/1_w.png",
-    "img/3_enemies_chicken/chicken_normal/1_walk/2_w.png",
-    "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
-  ];
-
   width = 100;
   height = 90;
   energy = 10;
 
-  /**
-   * Sound that plays when the chicken dies.
-   * @type {Audio}
-   */
   deadSound = new Audio("audio/squeak.mp3");
 
   /**
@@ -42,7 +28,7 @@ class Chicken extends MoveableObject {
     this.x = 200 + Math.random() * 799 * 5;
     this.y = 435;
     this.speed = 0.1 + Math.random() * 0.25;
-    this.loadImages(this.WALKING_CHICKEN);
+    this.loadImages(WALKING_CHICKEN);
     this.playAnimation();
   }
 
@@ -52,7 +38,7 @@ class Chicken extends MoveableObject {
   playAnimation() {
     let walkInterval = setInterval(() => {
       if (this.energy > 0) {
-        this.animate(this.WALKING_CHICKEN);
+        this.animate(WALKING_CHICKEN);
       }
     }, 100);
 
