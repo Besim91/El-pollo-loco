@@ -237,7 +237,7 @@ class Character extends MoveableObject {
       this.pepeDied = true;
       this.oneCycle(DEATH_PEPE);
       if (window.sound) {
-        this.deathNoise();
+        this.deathNoise(this.deadSound);
         mute();
       }
       this.energy = 100;
@@ -413,16 +413,5 @@ class Character extends MoveableObject {
     setTimeout(() => {
       clearInterval(pushBackAnimation);
     }, 100);
-  }
-
-  /**
-   * Plays the death sound and triggers the game over sound after a delay of 1000 milliseconds.
-   */
-  deathNoise() {
-    this.deathSound.play();
-    setTimeout(() => {
-      this.deathSound.pause();
-      this.gameOver.play();
-    }, 1000);
   }
 }

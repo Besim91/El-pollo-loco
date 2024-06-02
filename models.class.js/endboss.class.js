@@ -53,8 +53,7 @@ class Endboss extends MoveableObject {
         this.endbossDied = true;
         this.animate(DEAD_ENDBOSS);
         if (window.sound) {
-          this.deadSound.play();
-          this.playGameOver();
+          this.deathNoise(this.deadSound);
           mute();
         }
         this.endbossDead = true;

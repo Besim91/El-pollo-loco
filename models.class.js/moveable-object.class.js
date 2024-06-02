@@ -15,6 +15,7 @@ class MoveableObject extends DrawableObject {
   crushedFromAbove = false;
 
   deadSound = new Audio("audio/squeak.mp3");
+  gameOver = new Audio("audio/gameover.mp3");
 
   /**
    * Offset values for collision detection.
@@ -26,12 +27,6 @@ class MoveableObject extends DrawableObject {
     left: 0,
     right: 0,
   };
-
-  /**
-   * Audio element for the end of the game.
-   * @type {HTMLAudioElement}
-   */
-  gameOver = new Audio("audio/gameover.mp3");
 
   /**
    * Checks if the object collides with another object.
@@ -217,5 +212,16 @@ class MoveableObject extends DrawableObject {
    */
   energyHigh() {
     return this.energy > 0;
+  }
+
+  /**
+   * Plays the death sound and triggers the game over sound after a delay of 1000 milliseconds.
+   */
+  deathNoise(audioSound) {
+    audioSound.play();
+    setTimeout(() => {
+      audioSound.pause();
+      this.gameOver.play();
+    }, 1000);
   }
 }

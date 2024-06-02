@@ -1,17 +1,3 @@
-#canvas {
-  background-color: black;
-  border: solid 5px;
-  border-color: black;
-  border-radius: 25px;
-  position: relative;
-}
-
-#canvasFrame {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 body {
   display: flex;
   align-items: center;
@@ -26,28 +12,46 @@ body {
   font-family: "roundup";
 }
 
-#headline {
-  font-size: 80px;
+#canvas {
+  background-color: black;
+  border: solid 5px;
+  border-color: black;
+  border-radius: 25px;
+  position: relative;
+  width: 80vw;
+  height: calc(80vw * 3 / 4);
+  max-width: 800px;
+  max-height: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#headline,
+#headlineBottom {
+  font-size: 8vw; /* Responsive font size */
   text-align: center;
   text-shadow: 2px 2px 10px brown;
-  top: 5%;
   position: absolute;
+}
+
+#headline {
+  top: 5%;
 }
 
 #headlineBottom {
-  font-size: 80px;
-  text-align: center;
-  text-shadow: 2px 2px 10px brown;
   bottom: 5%;
-  position: absolute;
 }
 
 #gameControls {
-  width: 800px;
-  height: 600px;
+  width: 80vw; /* Use 80% of the viewport width */
+  height: calc(80vw * 3 / 4); /* Maintain 4:3 aspect ratio */
+  max-width: 800px;
+  max-height: 600px;
   position: absolute;
   background-color: transparent;
-  z-index: 999;
+  z-index: 999; /* Increase z-index to ensure it stays on top */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -55,6 +59,10 @@ body {
 
 .d-none {
   display: none !important;
+}
+
+.show-buttons {
+  display: block !important;
 }
 
 .btnStyle {
@@ -78,29 +86,43 @@ body {
 }
 
 #audioImg {
-  left: 320px;
+  left: 35%;
+  top: 25px;
+}
+
+#openScreenImg {
+  right: 35%;
+  top: 25px;
+}
+
+#closeScreenImg {
+  right: 35%;
   top: 25px;
 }
 
 .throw {
-  bottom: 25px;
-  left: 120px;
+  bottom: 8px;
+  left: 90px;
+  opacity: 0.4;
 }
 
 .jump {
-  bottom: 25px;
+  bottom: 8px;
   left: 25px;
+  opacity: 0.4;
 }
 
 .arrowRight {
   transform: rotate(180deg);
-  bottom: 25px;
-  right: 120px;
+  bottom: 8px;
+  right: 90px;
+  opacity: 0.4;
 }
 
 .arrowLeft {
-  bottom: 25px;
+  bottom: 8px;
   right: 25px;
+  opacity: 0.4;
 }
 
 #gameplayInfo {
@@ -113,14 +135,9 @@ body {
   top: 25px;
 }
 
-#openScreenImg {
-  right: 320px;
-  top: 25px;
-}
-
 .startEndImg {
-  width: 800px;
-  height: 600px;
+  width: 100%;
+  height: 100%;
   border-radius: 25px;
   border: solid 5px;
   border-color: black;
@@ -128,6 +145,10 @@ body {
 
 .startEndScreen {
   position: relative;
+  width: 80vw; /* Use 80% of the viewport width */
+  height: calc(80vw * 3 / 4); /* Maintain 4:3 aspect ratio */
+  max-width: 800px;
+  max-height: 600px;
 }
 
 #endScreen {
@@ -142,9 +163,16 @@ body {
   font-size: 32px;
 }
 
+#homeBtn {
+  top: 25px;
+  left: 90px;
+}
+
 .infodDiv {
-  width: 800px;
-  height: 600px;
+  width: 80vw; /* Use 80% of the viewport width */
+  height: calc(80vw * 3 / 4); /* Maintain 4:3 aspect ratio */
+  max-width: 800px;
+  max-height: 600px;
   background-color: rgb(255, 92, 32);
   border-radius: 25px;
   padding: 2%;
@@ -203,89 +231,59 @@ body {
 
 /* Responsive */
 
+/* Portrait mode: Hide everything except #turnDevice for widths under 800px */
 @media only screen and (max-width: 800px) and (orientation: portrait) {
-  #canvasFrame {
-    width: 100%;
+  #canvas,
+  #gameControls,
+  .startEndScreen,
+  .infodDiv,
+  #headline,
+  #headlineBottom {
     display: none;
   }
 
   #turnDevice {
     display: block;
-  }
-
-  #audioImg {
-    display: none;
-  }
-
-  #openScreenImg {
-    display: none;
-  }
-
-  .startEndImg {
-    display: none;
-  }
-
-  #startBtn {
-    display: none;
-  }
-  #gameplayInfo {
-    display: none;
-  }
-  #i {
-    display: none;
-  }
-  #headline {
-    display: none;
-  }
-
-  #headlineBottom {
-    display: none;
+    position: absolute;
+    transform: translate(-50%, -50%);
   }
 }
 
+/* Landscape mode: Hide #turnDevice and only #headline, #headlineBottom for widths under 800px */
 @media only screen and (max-width: 800px) and (orientation: landscape) {
-  #canvasFrame {
-    width: 100%;
-    display: block;
-  }
-
-  #headline {
-    display: none;
-  }
-
-  #headlineBottom {
-    display: none;
-  }
-
+  #headline,
+  #headlineBottom,
   #turnDevice {
     display: none;
   }
 
-  #audioImg {
-    display: none;
+  #canvas,
+  #gameControls,
+  .startEndScreen,
+  .infodDiv {
+    display: block;
   }
 
-  #openScreenImg {
-    display: none;
+  .btnStyle {
+    width: 16px;
+    height: 16px;
   }
 
-  #throw {
-    display: inline-block !important;
-  }
-  #jump {
-    display: inline-block !important;
-  }
-  .arrowRight {
-    display: inline-block !important;
-  }
+  /* Die folgenden Elemente sollen nur im Landscape-Modus und unter 800px Breite angezeigt werden */
+  .throw,
+  .jump,
+  .arrowRight,
   .arrowLeft {
-    display: inline-block !important;
+    display: block;
   }
 }
 
-@media only screen and (max-height: 600px) {
-  #canvasFrame {
-    height: 100vh;
-    width: 100%;
+/* Die folgenden Elemente sollen nur im Landscape-Modus und über 800px Breite ausgeblendet werden */
+@media only screen and (min-width: 800px) and (orientation: landscape) {
+  .throw,
+  .jump,
+  .arrowRight,
+  .arrowLeft {
+    display: none;
   }
 }
