@@ -152,7 +152,6 @@ body {
 }
 
 #endScreen {
-  background-color: black;
   border-radius: 25px;
 }
 
@@ -232,7 +231,7 @@ body {
 /* Responsive */
 
 /* Portrait mode: Hide everything except #turnDevice for widths under 800px */
-@media only screen and (max-width: 800px) and (orientation: portrait) {
+@media only screen and (max-width: 950px) and (orientation: portrait) {
   #canvas,
   #gameControls,
   .startEndScreen,
@@ -275,6 +274,11 @@ body {
   .arrowRight,
   .arrowLeft {
     display: block;
+  }
+
+  #gameplayInfo,
+  #i {
+    font-size: 14px;
   }
 }
 
