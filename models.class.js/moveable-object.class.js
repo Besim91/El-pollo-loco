@@ -11,6 +11,10 @@ class MoveableObject extends DrawableObject {
   offsetX = 0;
   offsetY = 0;
   lastMove;
+  otherDirection;
+  crushedFromAbove = false;
+
+  deadSound = new Audio("audio/squeak.mp3");
 
   /**
    * Offset values for collision detection.
@@ -73,6 +77,7 @@ class MoveableObject extends DrawableObject {
    */
   jump() {
     this.speedY = 40;
+    this.crushedFromAbove = false;
   }
 
   /**
@@ -130,6 +135,9 @@ class MoveableObject extends DrawableObject {
         this.y -= this.speedY;
         this.speedY -= this.acceleration;
       }
+      if (!this.isInAir() && this.y !== 235) {
+        this.y = 235;
+      }
     }, 60);
   }
 
@@ -177,5 +185,37 @@ class MoveableObject extends DrawableObject {
   playAudioOf(x) {
     x.volume = 0.5;
     x.play();
+  }
+
+  /**
+   * Monitors the energy level and handles enemy animation and audio.
+   * If the energy level drops to 0, it plays a sound, changes the image,
+   * and clears the animation and movement intervals.
+   *
+   * @param {number} walkInterval - The interval ID for walking animation.
+   * @param {number} moveInterval - The interval ID for movement animation.
+   * @param {string} img - The image URL or path to load when energy is 0.
+   */
+  check(walkInterval, moveInterval, img) {
+    let animationInterval = setInterval(() => {
+      if (this.energy == 0) {
+        if (window.sound) {
+          this.playAudioOf(this.deadSound);
+        }
+        this.loadImage(img);
+        clearInterval(animationInterval);
+        clearInterval(walkInterval);
+        clearInterval(moveInterval);
+      }
+    }, 100);
+  }
+
+  /**
+   * Checks if the energy level is above 0.
+   *
+   * @returns {boolean} True if the energy level is greater than 0, otherwise false.
+   */
+  energyHigh() {
+    return this.energy > 0;
   }
 }

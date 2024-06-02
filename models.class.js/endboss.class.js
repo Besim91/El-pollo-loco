@@ -5,6 +5,7 @@ class Endboss extends MoveableObject {
   startEndbossRun = false;
   speed = 50;
   endbossDied = false;
+  world;
 
   dinoSound = new Audio("audio/dinochicken.mp3");
   dinoWalk = new Audio("audio/dinowalk.mp3");
@@ -84,7 +85,7 @@ class Endboss extends MoveableObject {
     setInterval(() => {
       if (this.canAttack()) {
         this.animate(WALK_ENDBOSS);
-        this.moveLeft();
+        this.checkDirection();
         if (window.sound) {
           this.dinoWalk.play();
           this.dinoWalk.volume = 0.3;
@@ -95,6 +96,29 @@ class Endboss extends MoveableObject {
 
   canAttack() {
     return this.startEndbossRun && this.energy > 0 && this.energy <= 80;
+  }
+
+  checkDirection() {
+    if (this.characterLeftOfEndboss()) {
+      this.otherDirection = false;
+      this.moveLeft();
+    } else if (this.characterRightOfEndboss()) {
+      this.otherDirection = true;
+      this.moveRight();
+    }
+  }
+
+  characterLeftOfEndboss() {
+    return (
+      this.world.character.x + this.world.character.width / 2 <
+      this.x + this.width / 2
+    );
+  }
+  characterRightOfEndboss() {
+    return (
+      this.world.character.x + this.world.character.width / 2 >
+      this.x + this.width / 2
+    );
   }
 
   /**

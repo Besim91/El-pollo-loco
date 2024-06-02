@@ -2,7 +2,6 @@ class SmallChicken extends MoveableObject {
   width = 60;
   height = 60;
   energy = 10;
-  deadSound = new Audio("audio/squeak.mp3");
 
   /**
    * Offset values for collision detection.
@@ -35,13 +34,13 @@ class SmallChicken extends MoveableObject {
    */
   playAnimation() {
     let walkInterval = setInterval(() => {
-      if (this.energy > 0) {
+      if (this.energyHigh) {
         this.animate(WALKING_SMALLCHICKEN);
       }
     }, 100);
 
     let moveInterval = setInterval(() => {
-      if (this.energy > 0) {
+      if (this.energyHigh) {
         this.moveLeft();
       }
     }, 1000 / 120);
@@ -55,17 +54,10 @@ class SmallChicken extends MoveableObject {
    * @param {number} moveInterval - The interval ID for continuous movement.
    */
   checkDeath(walkInterval, moveInterval) {
-    let animationInterval = setInterval(() => {
-      if (this.energy == 0) {
-        if (window.sound) {
-          this.deadSound.play();
-          this.deadSound.volume = 0.6;
-        }
-        this.loadImage("img/3_enemies_chicken/chicken_small/2_dead/dead.png");
-        clearInterval(animationInterval);
-        clearInterval(walkInterval);
-        clearInterval(moveInterval);
-      }
-    }, 100);
+    this.check(
+      walkInterval,
+      moveInterval,
+      "img/3_enemies_chicken/chicken_small/2_dead/dead.png"
+    );
   }
 }

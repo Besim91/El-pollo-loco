@@ -3,7 +3,6 @@ class Character extends MoveableObject {
   width = 150;
   height = 300;
   speed = 8;
-  otherDirection;
   currentTime = 0;
   lastMove = 0;
   pepeRelaxed = false;
@@ -146,7 +145,7 @@ class Character extends MoveableObject {
    * Adjusts the camera's x-coordinate to keep the character centered.
    */
   updateCamera() {
-    this.world.cameraX = -this.x + 100;
+    this.world.cameraX = -this.x + 310;
   }
 
   /**
@@ -313,7 +312,7 @@ class Character extends MoveableObject {
         this.img = this.imageChache[path];
       }
     }
-    if (this.speedY == -40) {
+    if (this.speedY == -40 || this.y == 235) {
       for (let i = 6; i < 9; i++) {
         let path = arr[i];
         this.img = this.imageChache[path];
@@ -337,16 +336,17 @@ class Character extends MoveableObject {
         this.isInAir() &&
         this.speedY < 0 &&
         !this.enemyCrushed &&
-        this.y + this.height - 60 <= enemyY
+        !this.crushedFromAbove
       ) {
         this.jumpAfterCrush(enemy, index);
       } else if (
         !this.isInAir() &&
         (this.x < enemyX || this.x + this.width > enemyX + enemyWidth)
       ) {
+        this.crushedFromAbove = true;
         this.pushbackDirection(enemyX);
         this.speedY = 0;
-        this.y -= 15;
+        this.y -= 25;
         this.hit(10);
       }
     }, 10);
@@ -354,27 +354,39 @@ class Character extends MoveableObject {
   }
 
   /**
-   * Initiates a jump after crushing an enemy, sets speedY to 35, marks enemy as crushed,
+   * Initiates a jump after crushing an enemy, sets speedY to 40, marks the enemy as crushed,
    * inflicts damage to the enemy, and deletes the enemy from the array after a delay.
    *
-   * @param {object} enemy - The enemy object.
+   * @param {Enemy} enemy - The enemy object.
    * @param {number} index - The index of the enemy in the array.
    */
   jumpAfterCrush(enemy, index) {
-    this.speedY = 35;
+    this.speedY = 40;
     this.enemyCrushed = true;
-    enemy.hit(15);
+
+    if (enemy instanceof Endboss) {
+      if (enemy.energy > 70) {
+        enemy.hit(15);
+      }
+    } else {
+      enemy.hit(15);
+    }
+
     this.deleteEnemy(index);
   }
 
   /**
-   * Deletes the enemy from the array after a delay of 500 milliseconds.
+   * Deletes the enemy from the array after a delay of 500 milliseconds, except if the enemy is an Endboss.
    *
    * @param {number} index - The index of the enemy in the array.
    */
   deleteEnemy(index) {
     setTimeout(() => {
-      this.world.level.enemies.splice(index, 1);
+      // Check if the enemy is not an Endboss
+      let enemy = this.world.level.enemies[index];
+      if (!(enemy instanceof Endboss)) {
+        this.world.level.enemies.splice(index, 1);
+      }
       this.enemyCrushed = false;
     }, 500);
   }
@@ -386,9 +398,9 @@ class Character extends MoveableObject {
    */
   pushbackDirection(enemyX) {
     if (this.x < enemyX) {
-      this.x -= 20;
+      this.x -= 50;
     } else {
-      this.x += 20;
+      this.x += 50;
     }
   }
 

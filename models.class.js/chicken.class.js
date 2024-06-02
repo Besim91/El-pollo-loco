@@ -3,8 +3,6 @@ class Chicken extends MoveableObject {
   height = 90;
   energy = 10;
 
-  deadSound = new Audio("audio/squeak.mp3");
-
   /**
    * Offset values for collision detection.
    * @type {Object}
@@ -37,13 +35,13 @@ class Chicken extends MoveableObject {
    */
   playAnimation() {
     let walkInterval = setInterval(() => {
-      if (this.energy > 0) {
+      if (this.energyHigh) {
         this.animate(WALKING_CHICKEN);
       }
     }, 100);
 
     let moveInterval = setInterval(() => {
-      if (this.energy > 0) {
+      if (this.energyHigh) {
         this.moveLeft();
       }
     }, 1000 / 120);
@@ -57,17 +55,10 @@ class Chicken extends MoveableObject {
    * @param {number} moveInterval - ID of the movement interval.
    */
   checkDeath(walkInterval, moveInterval) {
-    let animationInterval = setInterval(() => {
-      if (this.energy == 0) {
-        if (window.sound) {
-          this.deadSound.play();
-          this.deadSound.volume = 0.6;
-        }
-        this.loadImage("img/3_enemies_chicken/chicken_normal/2_dead/dead.png");
-        clearInterval(animationInterval);
-        clearInterval(walkInterval);
-        clearInterval(moveInterval);
-      }
-    }, 100);
+    this.check(
+      walkInterval,
+      moveInterval,
+      "img/3_enemies_chicken/chicken_normal/2_dead/dead.png"
+    );
   }
 }

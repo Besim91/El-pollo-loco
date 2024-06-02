@@ -204,7 +204,7 @@ body {
 /* Responsive */
 
 @media only screen and (max-width: 800px) and (orientation: portrait) {
-  #canvas {
+  #canvasFrame {
     width: 100%;
     display: none;
   }
@@ -244,7 +244,7 @@ body {
 }
 
 @media only screen and (max-width: 800px) and (orientation: landscape) {
-  #canvas {
+  #canvasFrame {
     width: 100%;
     display: block;
   }
@@ -284,7 +284,7 @@ body {
 }
 
 @media only screen and (max-height: 600px) {
-  #canvas {
+  #canvasFrame {
     height: 100vh;
     width: 100%;
   }
